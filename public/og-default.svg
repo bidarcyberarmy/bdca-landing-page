@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#060913"/>
+      <stop offset="50%" stop-color="#0b1329"/>
+      <stop offset="100%" stop-color="#04070e"/>
+    </linearGradient>
+    <linearGradient id="cyberAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="100%" stop-color="#0066ff"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="50%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle Grid Lines -->
+  <g stroke="#1e293b" stroke-opacity="0.4" stroke-width="1">
+    <line x1="100" y1="0" x2="100" y2="630"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="500" y1="0" x2="500" y2="630"/>
+    <line x1="700" y1="0" x2="700" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+    <line x1="1100" y1="0" x2="1100" y2="630"/>
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="250" x2="1200" y2="250"/>
+    <line x1="0" y1="400" x2="1200" y2="400"/>
+    <line x1="0" y1="550" x2="1200" y2="550"/>
+  </g>
+
+  <!-- Outer Border -->
+  <rect x="24" y="24" width="1152" height="582" rx="16" stroke="#1e293b" stroke-width="2"/>
+  <rect x="28" y="28" width="1144" height="574" rx="12" stroke="#00f0ff" stroke-opacity="0.2" stroke-width="1"/>
+
+  <!-- Shield Emblem -->
+  <g transform="translate(100, 190)">
+    <path d="M 60 10 L 110 30 C 110 80 90 120 60 140 C 30 120 10 80 10 30 Z" fill="#0d1527" stroke="url(#cyberAccent)" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M 60 35 L 85 50 L 85 80 L 60 95 L 35 80 L 35 50 Z" fill="#0066ff" fill-opacity="0.15" stroke="#00f0ff" stroke-width="2"/>
+    <circle cx="60" cy="65" r="7" fill="#00f0ff"/>
+  </g>
+
+  <!-- Typography -->
+  <!-- Tag -->
+  <rect x="250" y="180" width="310" height="36" rx="18" fill="#00f0ff" fill-opacity="0.1" stroke="#00f0ff" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="270" y="204" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#00f0ff" letter-spacing="1.5">OFFICIAL ECOSYSTEM GATEWAY</text>
+
+  <!-- Title -->
+  <text x="250" y="275" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="900" fill="url(#textGrad)" letter-spacing="-1">BDCA</text>
+  <text x="250" y="335" font-family="system-ui, -apple-system, sans-serif" font-size="34" font-weight="700" fill="#f8fafc">Bina Darma Cyber Army</text>
+
+  <!-- Subtitle -->
+  <text x="250" y="390" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="400" fill="#94a3b8">Cyber Defense Research, CTF Training, and Information Security Ecosystem</text>
+
+  <!-- Bottom Metric Badges -->
+  <g transform="translate(250, 445)">
+    <!-- Badge 1 -->
+    <rect x="0" y="0" width="180" height="42" rx="8" fill="#0d1527" stroke="#1e293b" stroke-width="1"/>
+    <circle cx="20" cy="21" r="5" fill="#10b981"/>
+    <text x="35" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#f8fafc">Defcon Normal</text>
+
+    <!-- Badge 2 -->
+    <rect x="200" y="0" width="220" height="42" rx="8" fill="#0d1527" stroke="#1e293b" stroke-width="1"/>
+    <circle cx="220" cy="21" r="5" fill="#00f0ff"/>
+    <text x="235" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#f8fafc">Lighthouse 100 Target</text>
+
+    <!-- Badge 3 -->
+    <rect x="440" y="0" width="180" height="42" rx="8" fill="#0d1527" stroke="#1e293b" stroke-width="1"/>
+    <circle cx="460" cy="21" r="5" fill="#3b82f6"/>
+    <text x="475" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#f8fafc">Zero-JS Runtime</text>
+  </g>
+</svg>
