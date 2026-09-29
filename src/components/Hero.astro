@@ -8,7 +8,7 @@ import { siteConfig } from "../data/site";
     <div class="hero-content">
       <!-- Badge -->
       <div
-        class="inline-flex items-center justify-center gap-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-cyan-400 text-[11px] sm:text-xs font-mono mb-6 backdrop-blur-md animate-fade-in-up shadow-[0_0_15px_rgba(59,130,246,0.1)]"
+        class="badge-container inline-flex items-center justify-center gap-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-cyan-400 text-[11px] sm:text-xs font-mono mb-6 backdrop-blur-md animate-fade-in-up shadow-[0_0_15px_rgba(59,130,246,0.1)]"
         style="padding-left: 1.5rem; padding-right: 1.5rem;"
       >
         <span class="text-white font-semibold"
@@ -16,8 +16,8 @@ import { siteConfig } from "../data/site";
             >SEJAK {siteConfig.established}</span
           ></span
         >
-        <span class="opacity-50 text-blue-300">|</span>
-        <span class="uppercase tracking-wider font-medium"  
+        <span class="badge-divider opacity-50 text-blue-300">|</span>
+        <span class="badge-text-motto uppercase tracking-wider font-medium"  
           >{siteConfig.motto}</span
         >
       </div>
@@ -124,6 +124,18 @@ import { siteConfig } from "../data/site";
     max-width: 900px;
     margin: 0 auto;
     text-align: center;
+  }
+  
+  /* Mobile Adjustments for Badge */
+  @media (max-width: 640px) {
+    .badge-container {
+      margin-bottom: 2.5rem !important; /* Tambahan jarak ke judul di mobile */
+      gap: 0 !important;
+    }
+    .badge-divider,
+    .badge-text-motto {
+      display: none !important;
+    }
   }
 
   .hero-title {
