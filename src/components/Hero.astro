@@ -1,201 +1,322 @@
 ---
-import { siteConfig } from '../data/site';
+import { siteConfig } from "../data/site";
 ---
 
-<section class="hero section">
-  <div class="container hero-container">
-    <!-- Left: Floating Community Logo (Inspired by HCS animate-float) -->
-    <div class="hero-logo-wrap">
-      <img 
-        src="/assets/logo-emblem.webp" 
-        alt="BDCA Official Emblem" 
-        width="220" 
-        height="220" 
-        fetchpriority="high"
-        decoding="async"
-        class="hero-logo animate-float" 
-      />
-    </div>
+<section class="hero-section">
 
-    <!-- Right: Community Bio & Heading -->
+  <div class="container hero-container relative z-10">
     <div class="hero-content">
-      <div class="hero-badge">
-        <span class="est-tag">EST. {siteConfig.established}</span>
-        <span class="badge-sep" aria-hidden="true">/</span>
-        <span>{siteConfig.motto}</span>
+      <!-- Badge -->
+      <div
+        class="badge-container inline-flex items-center justify-center gap-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-cyan-400 text-[11px] sm:text-xs font-mono mb-6 backdrop-blur-md animate-fade-in-up shadow-[0_0_15px_rgba(59,130,246,0.1)]"
+        style="padding-left: 1.5rem; padding-right: 1.5rem;"
+      >
+        <span class="text-white font-semibold"
+          ><span class="flex items-center gap-1"
+            >SEJAK {siteConfig.established}</span
+          ></span
+        >
+        <span class="badge-divider opacity-50 text-blue-300">|</span>
+        <span class="badge-text-motto uppercase tracking-wider font-medium"  
+          >{siteConfig.motto}</span
+        >
       </div>
 
-      <h1 class="hero-title">
-        Bina Darma Cyber Army
+      <!-- Main Title with JS Scrambler -->
+      <h1 class="hero-title" id="scramble-title">
+        BINA DARMA <br /> CYBER ARMY
       </h1>
 
-      <p class="hero-description">
-        <strong>BDCA</strong> is an independent cyber security and IT community founded in {siteConfig.established}, mostly consists of 
-        <a href="https://binadarma.ac.id" target="_blank" rel="noopener noreferrer" class="univ-link">Universitas Bina Darma</a> 
-        students focused on ethical hacking, CTF competitions, and vulnerability research. Under the guidance of faculty mentor <strong>{siteConfig.mentor}</strong>.
+      <p class="hero-desc animate-fade-in-up delay-100">
+        Sebuah komunitas keamanan siber dan TI independen yang didirikan sejak
+        tahun {siteConfig.established}. Terdiri dari mahasiswa <a
+          href="https://binadarma.ac.id"
+          target="_blank"
+          class="text-white font-medium border-b border-blue-500 hover:text-cyan-400 hover:border-cyan-400 transition-colors"
+          >Universitas Bina Darma</a
+        >
+        yang berdedikasi tinggi dan berfokus pada <em>Ethical Hacking</em>,
+        kompetisi <em>Capture The Flag</em> (CTF), serta riset kerentanan (<em
+          >Vulnerability Research</em
+        >).
       </p>
 
-      <!-- Quick Action Buttons -->
-      <div class="hero-actions">
-        <a href="#subwebs" class="btn-hcs-primary">
-          <span>Explore Ecosystem</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-        </a>
-        <a href={siteConfig.links.ctftime} target="_blank" rel="noopener noreferrer" class="btn-hcs-outline">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M24 0v24H0V0zm-3.077 3.077L7.067 3.076 16 12.816 10.369 19l-2.195-2.612 3.476-3.573-8.574-9.609v17.717h17.847z"/></svg>
-          <span>CTFtime Team</span>
-        </a>
-      </div>
+      <br />
+      <br />
 
-      <!-- Quick Info Meta -->
-      <div class="hero-meta">
-        <span class="meta-item">
-          <strong>Established:</strong> Since {siteConfig.established} (15+ Years)
+      <!-- Action Buttons -->
+      <div
+        class="flex flex-wrap items-center justify-center gap-4 mt-10 animate-fade-in-up delay-200"
+      >
+        <a href="#subwebs" class="btn-primary group">
+          <span>Jelajahi Ekosistem</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="transition-transform duration-300 group-hover:translate-x-1"
+            ><path d="m9 18 6-6-6-6"></path></svg
+          >
+        </a>
+        <a href={siteConfig.links.ctftime} target="_blank" class="btn-outline">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"
+            ><path
+              fill-rule="evenodd"
+              d="M24 0v24H0V0zm-3.077 3.077L7.067 3.076 16 12.816 10.369 19l-2.195-2.612 3.476-3.573-8.574-9.609v17.717h17.847z"
+            ></path></svg
+          >
+          CTFtime Team
+        </a>
+      </div>
+      <!-- Stats / Meta -->
+      <div
+        class="border-t border-white/5 flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs sm:text-sm text-slate-400 font-mono animate-fade-in-up delay-300"
+        style="margin-top: 3.5rem; padding-top: 2rem;"
+      >
+        <span class="flex items-center gap-2">
+          <span class="text-cyan-500">></span> mentor: <span
+            class="text-slate-200">{siteConfig.mentor}</span
+          >
         </span>
-        <span class="meta-dot" aria-hidden="true">&bull;</span>
-        <span class="meta-item">
-          <strong>Faculty Mentor:</strong> {siteConfig.mentor}
+        <span class="hidden sm:inline text-slate-700">|</span>
+        <span class="flex items-center gap-2">
+          <span class="text-cyan-500">></span> afiliasi: <span
+            class="text-slate-200">Universitas Bina Darma</span
+          >
         </span>
-        <span class="meta-dot" aria-hidden="true">&bull;</span>
-        <span class="meta-item">
-          <strong>Affiliation:</strong> Universitas Bina Darma
+        <span class="hidden sm:inline text-slate-700">|</span>
+        <span class="flex items-center gap-2">
+          <span class="text-cyan-500">></span> status: <span
+            class="text-emerald-400">AKTIF</span
+          >
         </span>
       </div>
+    </div>
+  </div>
+
+  <!-- Scroll Down Indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in-up delay-300 z-10 hidden sm:block">
+    <div class="scroll-mouse">
+      <div class="scroll-wheel"></div>
     </div>
   </div>
 </section>
 
 <style>
-  .hero {
-    padding-top: clamp(3.5rem, 7vw, 6rem);
-    padding-bottom: clamp(3.5rem, 7vw, 6rem);
+  .hero-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 8rem 1.5rem 4rem; /* Top padding is larger to account for navbar */
+    background-color: transparent;
   }
 
   .hero-container {
-    display: flex;
-    align-items: center;
-    gap: clamp(2.5rem, 5vw, 5rem);
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
   }
-
-  .hero-logo-wrap {
-    flex-shrink: 0;
-    display: flex;
-    justify-content: center;
-  }
-
-  .hero-logo {
-    width: clamp(160px, 20vw, 240px);
-    height: auto;
-    filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.4));
-  }
-
-  .hero-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    width: fit-content;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: var(--cyan-accent);
-    background: rgba(56, 189, 248, 0.08);
-    border: 1px solid rgba(56, 189, 248, 0.2);
-    padding: 0.3rem 0.85rem;
-    border-radius: var(--radius-sm);
-  }
-
-  .est-tag {
-    color: #ffffff;
-    font-weight: 700;
-  }
-
-  .badge-sep {
-    color: var(--border-bright);
+  
+  /* Mobile Adjustments for Badge */
+  @media (max-width: 640px) {
+    .badge-container {
+      margin-bottom: 2.5rem !important; /* Tambahan jarak ke judul di mobile */
+      gap: 0 !important;
+    }
+    .badge-divider,
+    .badge-text-motto {
+      display: none !important;
+    }
   }
 
   .hero-title {
-    font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+    font-size: clamp(1.5rem, 5.5vw, 5.5rem);
     font-weight: 800;
-    color: var(--text-primary);
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+    line-height: 1.1;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.5rem;
+    font-family: var(--font-sans);
+    font-variant-numeric: tabular-nums;
+    min-height: clamp(1.5rem, 5.5vw, 5.5rem);
+    cursor: default;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
   }
 
-  .hero-description {
-    font-size: clamp(1rem, 1.8vw, 1.15rem);
-    line-height: 1.8;
+  .hero-desc {
+    font-size: clamp(0.95rem, 1.5vw, 1.125rem);
+    line-height: 1.75;
     color: var(--text-secondary);
-    max-width: 660px;
+    max-width: 680px;
+    margin: 0 auto;
   }
 
-  .hero-description strong {
-    color: var(--text-primary);
-    font-weight: 600;
-  }
-
-  .univ-link {
-    color: var(--text-primary);
-    font-weight: 600;
-    border-bottom: 1px solid var(--blue-primary);
-  }
-
-  .univ-link:hover {
-    color: var(--cyan-accent);
-    border-color: var(--cyan-accent);
-  }
-
-  .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
+  /* Buttons */
+  .btn-primary {
+    display: inline-flex;
     align-items: center;
-    gap: 1rem;
-    padding-top: 0.5rem;
+    gap: 0.6rem;
+    background: linear-gradient(135deg, var(--blue-primary) 0%, var(--cyan-accent) 100%);
+    color: white;
+    padding: 0.8rem 1.8rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--blue-hover) 0%, var(--blue-primary) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 0 40px rgba(56, 189, 248, 0.5);
   }
 
-  .hero-meta {
-    display: flex;
-    flex-wrap: wrap;
+  .btn-outline {
+    display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 0.84375rem;
-    color: var(--text-muted);
-    padding-top: 0.75rem;
-    border-top: 1px solid var(--border-subtle);
+    gap: 0.6rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 0.8rem 1.8rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    transition: all 0.25s ease;
+  }
+  .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
   }
 
-  .hero-meta strong {
-    color: var(--text-secondary);
+
+  /* Scroll Mouse Indicator */
+  .scroll-mouse {
+    width: 24px;
+    height: 38px;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
+  }
+  .scroll-wheel {
+    width: 4px;
+    height: 6px;
+    background: var(--cyan-accent);
+    border-radius: 2px;
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scrollWheel 1.5s infinite;
+  }
+  @keyframes scrollWheel {
+    0% { transform: translate(-50%, 0); opacity: 1; }
+    100% { transform: translate(-50%, 12px); opacity: 0; }
   }
 
-  .meta-dot {
-    color: var(--border-bright);
+  /* Entrance Animations */
+  .animate-fade-in-up {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+  .delay-300 {
+    animation-delay: 300ms;
   }
 
-  @media (max-width: 860px) {
-    .hero-container {
-      flex-direction: column;
-      text-align: center;
-      gap: 2.5rem;
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
     }
-
-    .hero-content {
-      align-items: center;
-    }
-
-    .hero-actions {
-      justify-content: center;
-    }
-
-    .hero-meta {
-      justify-content: center;
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 </style>
+
+<script is:inline>
+  "use strict";
+
+  // --- 1. Vanilla JS Scramble Text Effect ---
+  class ScrambleText {
+    constructor(element) {
+      this.element = element;
+      this.originalText = element.innerText.trim();
+      this.chars = "!<>-_\\\\/[]{}—=+*^?#________";
+      this.frameRequest = null;
+      this.frame = 0;
+      this.queue = [];
+      this.scramble();
+    }
+
+    scramble() {
+      const length = this.originalText.length;
+      this.queue = [];
+      for (let i = 0; i < length; i++) {
+        const char = this.originalText[i];
+        const start = Math.floor(Math.random() * 40);
+        const end = start + Math.floor(Math.random() * 40);
+        this.queue.push({ char, start, end });
+      }
+      cancelAnimationFrame(this.frameRequest);
+      this.frame = 0;
+      this.update();
+    }
+
+    update() {
+      let output = "";
+      let complete = 0;
+
+      for (let i = 0, n = this.queue.length; i < n; i++) {
+        let { char, start, end } = this.queue[i];
+        if (this.frame >= end) {
+          complete++;
+          output += char === "\n" ? "<br>" : char;
+        } else if (this.frame >= start) {
+          if (!char.match(/\s/)) {
+            output += `<span class="text-cyan-500">${this.chars[Math.floor(Math.random() * this.chars.length)]}</span>`;
+          } else if (char === "\n") {
+            output += "<br>";
+          } else {
+            output += " ";
+          }
+        } else {
+          output += "";
+        }
+      }
+
+      this.element.innerHTML = output;
+
+      if (complete === this.queue.length) {
+        cancelAnimationFrame(this.frameRequest);
+      } else {
+        this.frameRequest = requestAnimationFrame(() => this.update());
+        this.frame++;
+      }
+    }
+  }
+
+  // --- 2. Initialize Scripts ---
+  document.addEventListener("DOMContentLoaded", () => {
+    // Init Scramble Title
+    const title = document.getElementById("scramble-title");
+    if (title) new ScrambleText(title);
+  });
+</script>

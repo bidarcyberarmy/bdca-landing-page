@@ -13,9 +13,14 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.2.1",
-    "astro": "^5.4.2"
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.5",
+    "framer-motion": "^13.4.6",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
+    "prettier": "^3.9.9",
+    "prettier-plugin-astro": "^1.1.0",
     "typescript": "^5.8.2"
   }
 }
