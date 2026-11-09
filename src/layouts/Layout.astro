@@ -3,36 +3,33 @@ import '../styles/global.css';
 import { siteConfig } from '../data/site';
 
 interface Props {
-  title?: string;
-  description?: string;
-  ogImage?: string;
+  title: string;
+  description: string;
 }
 
-const {
-  title = `${siteConfig.fullName} (${siteConfig.shortName}) - Portal Resmi`,
-  description = siteConfig.description,
-  ogImage = siteConfig.ogImage,
-} = Astro.props;
-
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || siteConfig.url);
+const { title, description } = Astro.props;
+const siteURL = Astro.site ?? new URL(siteConfig.url);
+const canonicalURL = new URL(Astro.url.pathname, siteURL);
+const socialImageURL = new URL(siteConfig.ogImage, siteURL);
+const organizationId = new URL('/#organization', siteURL).href;
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Organization",
-      "@id": `${siteConfig.url}/#organization`,
+      "@id": organizationId,
       "name": siteConfig.fullName,
       "alternateName": siteConfig.shortName,
       "url": siteConfig.url,
-      "logo": `${siteConfig.url}/assets/logo-emblem.webp`,
+      "logo": new URL('/assets/logo-emblem.webp', siteURL).href,
       "description": siteConfig.description,
       "sameAs": [
         siteConfig.links.github,
         siteConfig.links.instagram,
         siteConfig.links.discord,
         siteConfig.links.linkedin
-      ].filter(Boolean),
+      ],
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Palembang",
@@ -41,63 +38,51 @@ const jsonLd = {
     },
     {
       "@type": "WebSite",
-      "@id": `${siteConfig.url}/#website`,
-      "url": siteConfig.url,
-      "name": `${siteConfig.fullName} Portal`,
+      "@id": new URL('/#website', siteURL).href,
+      "url": siteURL.href,
+      "name": siteConfig.fullName,
+      "inLanguage": "en",
       "publisher": {
-        "@id": `${siteConfig.url}/#organization`
+        "@id": organizationId
       }
     }
   ]
 };
+const structuredData = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 ---
 
 <!doctype html>
-<html lang="id">
+<html lang="en">
   <head>
-    <!-- Character Encoding and Viewport -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#06080d" />
+    <meta name="theme-color" content="#f7faff" />
 
-    <!-- Google Fonts Preconnect (Zero CLS) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />
 
-    <!-- Primary Meta Tags -->
     <title>{title}</title>
-    <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/webp" href="/favicon.webp" />
+    <link rel="icon" type="image/webp" href="/assets/bdca-emblem-96.webp" />
 
-    <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(ogImage, Astro.site || siteConfig.url)} />
+    <meta property="og:image" content={socialImageURL} />
     <meta property="og:site_name" content={siteConfig.fullName} />
-    <meta property="og:locale" content="id_ID" />
+    <meta property="og:locale" content="en_US" />
 
-    <!-- Twitter Card -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={new URL(ogImage, Astro.site || siteConfig.url)} />
+    <meta property="twitter:image" content={socialImageURL} />
 
-    <!-- Structured Data (JSON-LD) for SEO 100 -->
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script type="application/ld+json" set:html={structuredData} />
   </head>
   <body>
-    <!-- Skip Link for Keyboard Accessibility (WCAG AAA) -->
-    <a href="#main-content" class="skip-link">Lompat ke konten utama</a>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <slot />
   </body>

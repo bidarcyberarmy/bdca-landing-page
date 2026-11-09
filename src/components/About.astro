@@ -1,132 +1,32 @@
 ---
-import { siteConfig } from '../data/site';
 ---
 
-<section id="about" class="about section">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">About The Community</span>
-      <h2 class="section-title">Dedication to Cyber Security Excellence Since {siteConfig.established}</h2>
-      <p class="section-subtitle">
-        Membangun ekosistem teknologi pertahanan digital, riset kerentanan siber, dan pembinaan talenta etis di lingkungan Universitas Bina Darma.
-      </p>
-    </div>
-
-    <!-- About Cards Grid -->
-    <div class="about-grid">
-      <!-- Card 1: 15+ Years Legacy -->
-      <div class="hcs-card">
-        <div class="card-tag">// 15+ YEARS OF EXCELLENCE</div>
-        <h3 class="card-heading">Sejarah & Jejak Langkah Komunitas</h3>
-        <p class="card-text">
-          Berdiri sejak tahun <strong>{siteConfig.established}</strong>, Bina Darma Cyber Army (BDCA) telah menjadi pusat berkumpulnya mahasiswa dan periset keamanan informasi di Universitas Bina Darma. Selama lebih dari 15 tahun, komunitas ini konsisten melahirkan talenta yang aktif dalam kompetisi Capture The Flag (CTF) nasional, riset eksploitasi etis, dan pengamanan sistem.
-        </p>
-      </div>
-
-      <!-- Card 2: Faculty Mentorship & Philosophy -->
-      <div class="hcs-card">
-        <div class="card-tag">// FACULTY MENTORSHIP & PHILOSOPHY</div>
-        <h3 class="card-heading">Bimbingan Akademisi & Etika Peretasan</h3>
-        <p class="card-text">
-          Di bawah bimbingan dosen pembina <strong>{siteConfig.mentor}</strong>, BDCA berpegang teguh pada prinsip <em>"{siteConfig.motto}"</em>. Kami menanamkan kesadaran etika hukum siber yang kuat, memastikan setiap keterampilan ofensif dan defensif yang dipelajari semata-mata dimanfaatkan untuk melindungi integritas sistem dan infrastruktur digital.
-        </p>
-      </div>
-    </div>
-
-    <!-- 3 Core Technical Tracks -->
-    <div class="tracks-grid">
-      <div class="hcs-card track-card">
-        <span class="track-num">01</span>
-        <h4 class="track-title">Offensive Security & CTF</h4>
-        <p class="track-desc">
-          Binary exploitation, web application security, cryptography, dan reverse engineering untuk turnamen Capture The Flag bergengsi.
-        </p>
-      </div>
-
-      <div class="hcs-card track-card">
-        <span class="track-num">02</span>
-        <h4 class="track-title">Defensive & Hardening</h4>
-        <p class="track-desc">
-          System hardening, monitoring log intrusi, digital forensics, dan mitigasi dini ancaman siber terhadap infrastruktur digital kampus.
-        </p>
-      </div>
-
-      <div class="hcs-card track-card">
-        <span class="track-num">03</span>
-        <h4 class="track-title">Research & Community Lab</h4>
-        <p class="track-desc">
-          Eksplorasi PoC kerentanan web, pengembangan automasi keamanan, dan sharing session pengetahuan teknologi siber.
-        </p>
-      </div>
-    </div>
+<section id="about" class="about wrap" aria-labelledby="about-title">
+  <div>
+    <p class="eyebrow">01 / Who we are</p>
+    <h2 class="display-title" id="about-title">A place to<br /><span class="accent">become more.</span></h2>
+  </div>
+  <div class="about-copy">
+    <p class="eyebrow">Bina Darma Cyber Army</p>
+    <p class="intro">A student-led technology community at Universitas Bina Darma in Palembang. We explore cybersecurity, build software, share knowledge, and grow through practical collaboration.</p>
+    <ul class="topics" role="list">
+      <li>Student community</li>
+      <li>Cybersecurity</li>
+      <li>Software engineering</li>
+      <li>Research</li>
+    </ul>
   </div>
 </section>
 
 <style>
-  .about {
-    border-top: 1px solid var(--border-subtle);
-  }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .card-tag {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    font-weight: 700;
-    color: var(--cyan-accent);
-    letter-spacing: 0.08em;
-    margin-bottom: 0.75rem;
-  }
-
-  .card-heading {
-    font-size: 1.25rem;
-    margin-bottom: 0.75rem;
-    color: var(--text-primary);
-  }
-
-  .card-text {
-    font-size: 0.96875rem;
-    line-height: 1.7;
-    color: var(--text-secondary);
-  }
-
-  .card-text strong {
-    color: var(--text-primary);
-  }
-
-  .tracks-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .track-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .track-num {
-    font-family: var(--font-mono);
-    font-size: 1.15rem;
-    font-weight: 800;
-    color: var(--blue-primary);
-  }
-
-  .track-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--text-primary);
-  }
-
-  .track-desc {
-    font-size: 0.875rem;
-    line-height: 1.6;
-    color: var(--text-secondary);
+  .about { display: grid; grid-template-columns: minmax(0, .84fr) minmax(0, 1.16fr); padding-block: var(--section-space); }
+  .about .eyebrow { margin-block-end: .85rem; }
+  .about-copy { border-inline-start: 1px solid var(--line); padding-inline-start: clamp(1.75rem, 4vw, 4rem); }
+  .intro { color: var(--muted); font-size: clamp(1.05rem, 1.36vw, 1.35rem); line-height: 1.6; max-width: 40rem; text-wrap: pretty; }
+  .topics { display: flex; flex-wrap: wrap; gap: .55rem .65rem; list-style: none; padding: 0; margin-block-start: 1.2rem; }
+  .topics li { border: 1px solid var(--line); border-radius: 2rem; padding: .58rem 1rem; font-size: .8125rem; background: linear-gradient(110deg, #f9fcff, #e8f3fe); }
+  @media (max-width: 700px) {
+    .about { grid-template-columns: 1fr; gap: 1.35rem; }
+    .about-copy { border-inline-start: 0; border-block-start: 1px solid var(--line); padding: 1.15rem 0 0; }
   }
 </style>

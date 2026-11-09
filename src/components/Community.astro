@@ -1,0 +1,84 @@
+---
+import { siteConfig } from '../data/site';
+---
+
+<section id="community" class="community wrap wrap-wide" aria-labelledby="community-title">
+  <div class="community-content">
+    <p class="community-kicker">Stay curious. Stay connected.</p>
+    <h2 class="display-title" id="community-title">There’s room for<br />your next idea.</h2>
+    <p class="community-description">Discover a community of students learning, experimenting, and building together at Universitas Bina Darma.</p>
+    <a class="button button-light" href={siteConfig.links.instagram} rel="noopener noreferrer">Connect with BDCA <span aria-hidden="true">↗</span></a>
+  </div>
+  <figure class="community-globe">
+    <img src="/assets/cloud-globe-palembang.webp" width="640" height="640" alt="Globe marking the BDCA base in Palembang" loading="lazy" decoding="async" />
+    <span class="base-marker" aria-hidden="true"></span>
+  </figure>
+</section>
+
+<style>
+  .community {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 3% 116%, #1a5cc1, transparent 66%),
+      linear-gradient(137deg, #08172e, #0d3366 56%, #06162e);
+    color: #f8faff;
+    border-radius: .55rem;
+    margin-block-end: clamp(1.75rem, 2.6vw, 2.5rem);
+    padding: clamp(1.85rem, 3.6vw, 3.7rem) clamp(1.5rem, 5.25vw, 5.25rem);
+  }
+  .community::before, .community::after {
+    position: absolute;
+    content: '';
+    pointer-events: none;
+  }
+  .community::before {
+    z-index: -2;
+    inset: -52% -7% 39% -17%;
+    transform: rotate(-11deg);
+    transform-origin: right bottom;
+    border-radius: 0 0 56% 40%;
+    background: linear-gradient(110deg, #102346 24%, #1159bf 60%, #37d8ec 89%, #72ecf1);
+    box-shadow: 0 .45rem 2.25rem #35dbff54;
+  }
+  .community::after {
+    z-index: -1;
+    inset: 0;
+    background: linear-gradient(90deg, #08162df2, #09182dc4 31%, #09182d45 56%, transparent 73%);
+  }
+  .community-content { position: relative; z-index: 1; max-width: min(34rem, 55%); }
+  .community-kicker { color: #c0cce0; margin-block-end: .8rem; }
+  h2 { font-size: clamp(2.05rem, 3.75vw, 3.75rem); }
+  .community-description { color: #d1dcf0; margin-block: .85rem 1.35rem; font-size: clamp(1rem, 1.1vw, 1.125rem); text-wrap: pretty; }
+  .community .button:focus-visible { outline-color: #d2f6ff; }
+  .community-globe {
+    position: absolute;
+    inset: auto -4% 0 auto;
+    width: min(41%, 35rem);
+    margin: 0;
+    transform: translateY(48%);
+    pointer-events: none;
+  }
+  .community-globe img { width: 100%; height: auto; }
+  /* Projected city coordinates for the Palembang globe artwork. */
+  .base-marker {
+    position: absolute;
+    left: 38.139%;
+    top: 28.811%;
+    transform: translate(-50%, -50%);
+    width: .625rem;
+    height: .625rem;
+    border: 1px solid #ffe8ec;
+    border-radius: 50%;
+    background: #fa3d55;
+    box-shadow: 0 0 0 .23rem #fa3d553d;
+  }
+  @media (max-width: 760px) {
+    .community { padding-block-end: clamp(8.5rem, 40vw, 15.5rem); }
+    .community-content { max-width: 30rem; }
+    .community::before { inset: -34% -20% 20% -40%; transform: rotate(-23deg); }
+    .community::after { background: linear-gradient(163deg, #08162ef2, #091a34b8 54%, #08172d30 85%); }
+    .community-globe { width: min(80%, 28rem); right: -1%; }
+  }
+</style>

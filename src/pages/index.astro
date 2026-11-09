@@ -3,26 +3,23 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
-import Achievements from '../components/Achievements.astro';
-import SubWebHub from '../components/SubWebHub.astro';
+import Programs from '../components/Programs.astro';
 import Structure from '../components/Structure.astro';
+import Community from '../components/Community.astro';
 import Footer from '../components/Footer.astro';
-import { siteConfig } from '../data/site';
 ---
 
-<Layout 
-  title={`${siteConfig.fullName} (${siteConfig.shortName}) - Independent Cyber Security Community`}
-  description={siteConfig.description}
+<Layout
+  title="Bina Darma Cyber Army (BDCA) · Student Tech Community"
+  description="Meet Bina Darma Cyber Army, the student technology community at Universitas Bina Darma in Palembang. Explore cybersecurity, software development, and research."
 >
   <Navbar />
-  
   <main id="main-content">
     <Hero />
     <About />
+    <Programs />
     <Structure />
-    <Achievements />
-    <SubWebHub />
+    <Community />
   </main>
-
   <Footer />
 </Layout>

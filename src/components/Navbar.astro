@@ -1,114 +1,64 @@
 ---
-import { siteConfig } from '../data/site';
+const links = [
+  { href: '/#programs', label: 'Programs' },
+  { href: '/#members', label: 'Our people' },
+  { href: '/#community', label: 'Community' },
+  { href: '/ecosystem/', label: 'Ecosystem' },
+];
 ---
 
-<header class="header">
-  <div class="container header-inner">
-    <!-- Brand Logo (Left) -->
-    <a href="#" class="brand" aria-label="BDCA Beranda">
-      <img src="/assets/logo-emblem.webp" alt="BDCA Official Emblem" width="38" height="38" decoding="async" class="brand-logo" />
-      <span class="brand-name">BDCA</span>
+<header class="site-header">
+  <div class="wrap wrap-wide header-inner">
+    <a class="brand" href="/" aria-label="BDCA home">
+      <img src="/assets/bdca-emblem-96.webp" width="36" height="36" alt="" />
+      <span>BDCA</span>
     </a>
-
-    <!-- Desktop Navigation Links -->
-    <nav class="nav" aria-label="Navigasi Utama">
-      <ul class="nav-list">
-        <li><a href="#" class="nav-item">Home</a></li>
-        <li><a href="#about" class="nav-item">About</a></li>
-        <li><a href="#members" class="nav-item">Members</a></li>
-        <li><a href="#achievements" class="nav-item">Achievements</a></li>
-        <li><a href="#subwebs" class="nav-item">Ecosystem</a></li>
-        <li><a href="#contact" class="nav-item">Contact</a></li>
-      </ul>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      {links.map(({ href, label }) => <a href={href}>{label}</a>)}
     </nav>
-
-    <!-- CTF Quick Button -->
-    <div class="header-right">
-      <a href="#subwebs" class="btn-hcs-primary nav-cta">
-        <span>Portal Hub</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-      </a>
-    </div>
+    <a class="button header-cta" href="/#community">Join the community <span aria-hidden="true">↗</span></a>
+    <details class="mobile-nav">
+      <summary>Menu <span aria-hidden="true">+</span></summary>
+      <nav aria-label="Mobile navigation">
+        {links.map(({ href, label }) => <a href={href}>{label}</a>)}
+        <a href="/#community">Join the community <span aria-hidden="true">↗</span></a>
+      </nav>
+    </details>
   </div>
 </header>
 
 <style>
-  .header {
-    width: 100%;
-    padding: 1.25rem 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(20, 28, 43, 0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-subtle);
-  }
-
-  .header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-  }
-
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .brand-logo {
-    width: 38px;
-    height: 38px;
-    transition: transform var(--transition-fast);
-  }
-
-  .brand:hover .brand-logo {
-    transform: scale(1.05);
-  }
-
-  .brand-name {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: var(--text-primary);
-    letter-spacing: -0.01em;
-  }
-
-  .nav-list {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    list-style: none;
-  }
-
-  .nav-item {
-    font-size: 0.9375rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    padding: 0.45rem 0.95rem;
-    border-radius: var(--radius-sm);
-    transition: all var(--transition-fast);
-  }
-
-  .nav-item:hover {
-    color: var(--text-primary);
-    background-color: rgba(255, 255, 255, 0.08);
-  }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-  }
-
-  .nav-cta {
-    padding: 0.5rem 1.1rem;
-    font-size: 0.875rem;
-  }
-
-  @media (max-width: 860px) {
-    .nav {
-      display: none;
-    }
+  .site-header { position: relative; z-index: 2; background: transparent; }
+  .header-inner { min-height: var(--header-height); display: flex; align-items: center; gap: clamp(1.25rem, 3.5vw, 3.75rem); }
+  .brand { display: inline-flex; align-items: center; gap: .7rem; min-height: 44px; font-weight: 700; font-size: 1.6rem; letter-spacing: -.065em; }
+  .desktop-nav { display: flex; align-items: center; gap: clamp(1.25rem, 2.45vw, 2.45rem); margin-inline-start: auto; font-size: .9375rem; }
+  .desktop-nav a { color: #344056; padding-block: .75rem; }
+  .desktop-nav a:hover, .mobile-nav a:hover { color: var(--accent); }
+  .header-cta { min-height: 44px; font-size: .875rem; white-space: nowrap; background: linear-gradient(110deg, var(--accent-bright), #0c285a); }
+  .header-cta:hover { background: var(--accent-deep); }
+  .mobile-nav { display: none; }
+  @media (max-width: 840px) {
+    .header-inner { justify-content: space-between; }
+    .desktop-nav, .header-cta { display: none; }
+    .mobile-nav { display: block; }
+    .mobile-nav summary { display: flex; gap: .75rem; align-items: center; min-height: 44px; padding-inline: .8rem; border: 1px solid var(--line); border-radius: .5rem; cursor: pointer; font-size: .875rem; font-weight: 700; }
+    .mobile-nav summary::-webkit-details-marker { display: none; }
+    .mobile-nav[open] summary span { transform: rotate(45deg); }
+    .mobile-nav nav { position: absolute; inset: 100% var(--gutter) auto; display: grid; padding: .4rem .8rem; background: var(--paper); border: 1px solid var(--line); border-radius: 0 0 .6rem .6rem; box-shadow: 0 .6rem 1.4rem #17263b0c; }
+    .mobile-nav a { display: flex; align-items: center; min-height: 44px; padding-inline: .5rem; }
+    .mobile-nav a + a { border-block-start: 1px solid var(--line); }
   }
 </style>
+
+<script>
+  const menu = document.querySelector<HTMLDetailsElement>('.mobile-nav');
+  menu?.addEventListener('click', (event) => {
+    if (event.target instanceof Element && event.target.closest('a')) menu.open = false;
+  });
+  menu?.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu.open) {
+      menu.open = false;
+      menu.querySelector('summary')?.focus();
+    }
+  });
+</script>
