@@ -1,5 +1,4 @@
-export interface Achievement {
-  id: string;
+interface Achievement {
   title: string;
   category: "National" | "International" | "Campus";
   date: string;
@@ -10,57 +9,51 @@ export interface Achievement {
 
 export const achievements: Achievement[] = [
   {
-    id: "gemastik-xviii",
     title: "Gemastik XVIII Cyber Security Division",
     category: "National",
-    date: "Oktober 2025",
+    date: "October 2025",
     rank: "Finalist / Top 10",
     teamName: "BDCA Cyber Force",
-    description: "Kompetisi Keamanan Siber Tingkat Perguruan Tinggi Nasional - Pusat Prestasi Nasional (Puspresnas)."
+    description: "A national university cybersecurity competition run by Pusat Prestasi Nasional (Puspresnas)."
   },
   {
-    id: "hacktoday-2025",
     title: "HackToday CTF 2025",
     category: "National",
     date: "September 2025",
     rank: "Finalist",
     teamName: "BDCA - 0xPalembang",
-    description: "Kompetisi Capture The Flag Jeopardy Style Nasional diselenggarakan oleh Institut Pertanian Bogor (IPB)."
+    description: "A national Jeopardy-style Capture the Flag competition hosted by Institut Pertanian Bogor (IPB)."
   },
   {
-    id: "cyber-jawara-2025",
     title: "The Cyber Jawara National CTF 2025",
     category: "National",
-    date: "Agustus 2025",
+    date: "August 2025",
     rank: "Top 15 National",
     teamName: "BDCA Army",
-    description: "Kejuaraan Keamanan Siber Bergengsi Indonesia diselenggarakan oleh CSIRT.ID dan ID-SIRTII."
+    description: "An Indonesian cybersecurity championship organized by CSIRT.ID and ID-SIRTII."
   },
   {
-    id: "find-it-2025",
     title: "FIND IT 2025 CTF Competition",
     category: "National",
-    date: "Mei 2025",
+    date: "May 2025",
     rank: "Finalist",
     teamName: "BDCA Red Team",
-    description: "Kompetisi CTF Nasional Universitas Gadjah Mada (UGM) bidang Web Exploitation dan Reverse Engineering."
+    description: "A national CTF hosted by Universitas Gadjah Mada (UGM), featuring web exploitation and reverse engineering."
   },
   {
-    id: "ctftime-global",
     title: "CTFtime Global Season Rating 2025",
     category: "International",
-    date: "Musim 2025",
+    date: "2025 season",
     rank: "Top Active Team Indonesia",
     teamName: "BDCA Team",
-    description: "Partisipasi aktif dalam rangkaian kompetisi internasional CTFtime (SunshineCTF, BDSec, Cyber Jawara)."
+    description: "BDCA competed in CTFtime events including SunshineCTF, BDSec, and Cyber Jawara."
   },
   {
-    id: "ncw-2024",
     title: "National Cyber Week CTF 2024",
     category: "National",
     date: "November 2024",
     rank: "Top 8",
     teamName: "BDCA Vanguard",
-    description: "Kompetisi penetrasi sistem dan eksploitasi kerentanan keamanan informasi tingkat nasional."
+    description: "A national competition focused on penetration testing and exploiting security vulnerabilities."
   }
 ];
