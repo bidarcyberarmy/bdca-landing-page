@@ -1,68 +1,19 @@
-# BDCA Landing Page - Panduan Pengelolaan Data
+# Managing BDCA content
 
-Panduan untuk memperbarui data pengurus, divisi, platform sub-web, dan metadata organisasi.
+## Team roster
 
----
+Edit `teamGroups` and `rosterPeriod` in `src/data/team.ts`. Put each member in the appropriate group's `members` array with a name and role. The array order controls display order.
 
-## 1. Pengelolaan Data Anggota Tim (src/data/team.ts)
+For a portrait, save an optimized WebP image in `public/assets/team/`, preferably close to a 4:5 aspect ratio. Set the member's optional `avatar` field to its public path, for example `/assets/team/member.webp`. The site displays a silhouette when the field is omitted.
 
-File ini menampung susunan pengurus Badan Pengurus Harian (BPH) dan divisi teknis operasional.
+## Ecosystem
 
-### Format Data Anggota:
-```ts
-export interface TeamMember {
-  id: string;
-  name: string;
-  role: string;
-  divisionId: string;
-  divisionName: string;
-  avatar: string;
-  github?: string;
-  linkedin?: string;
-  certifications?: string[];
-  bio?: string;
-}
-```
+Edit `src/data/subwebs.ts` to change the resource title, description, category, or status. An `online` resource requires an HTTPS URL. `maintenance` and `internal` resources display a status label in place of a link.
 
-### Prosedur Penambahan Foto dan Anggota:
-1. Tempatkan file foto anggota di dalam folder `public/assets/team/` (disarankan aspek rasio 1:1 format WebP atau SVG).
-2. Buka file `src/data/team.ts`.
-3. Tambahkan objek anggota ke dalam array `teamMembers`.
+## Competition record
 
----
+Edit `src/data/achievements.ts` to add results. Use an English date label, keep official event and team names, and add the rank and description where available.
 
-## 2. Pengelolaan Portal Sub-Web (src/data/subwebs.ts)
+## Site information
 
-Portal perantara sub-web digunakan untuk menghubungkan landing page utama dengan sub-domain dan layanan ekosistem BDCA.
-
-### Format Data Sub-Web:
-```ts
-export interface SubWeb {
-  id: string;
-  title: string;
-  description: string;
-  url: string;
-  category: string;
-  status: "online" | "maintenance" | "internal";
-  statusLabel: string;
-  tags: string[];
-  icon: string;
-  featured?: boolean;
-}
-```
-
-### Nilai Status:
-- online: Platform sedang aktif dan dapat diakses publik.
-- maintenance: Platform sedang dalam proses perbaikan atau pembaruan.
-- internal: Platform khusus untuk anggota internal organisasi.
-
----
-
-## 3. Pengelolaan Informasi Situs (src/data/site.ts)
-
-File `src/data/site.ts` digunakan untuk mengatur konfigurasi global:
-- Nama lengkap dan nama pendek organisasi
-- Deskripsi meta SEO
-- Alamat sekretariat atau lab
-- Email kontak resmi
-- Tautan akun media sosial
+Update `src/data/site.ts` for the organization name, description, contact email, official links, and social preview image. The site's canonical origin comes from `astro.config.mjs`.

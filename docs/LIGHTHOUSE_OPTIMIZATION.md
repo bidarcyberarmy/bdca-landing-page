@@ -1,39 +1,10 @@
-# BDCA Landing Page - Strategi Optimasi Lighthouse 100/100/100/100
+# Lighthouse verification
 
-Dokumen teknis ini merinci metodologi untuk menjaga skor 100 pada keempat kategori Google Lighthouse: Performance, Accessibility, Best Practices, dan SEO.
+Build the site with `npm run build` and serve `dist/` through a preview that applies the response headers in `public/_headers`. Run Lighthouse with both the mobile and desktop profiles on `/`, `/ecosystem/`, and `/activities/`. Record the Lighthouse version and scores for Performance, Accessibility, Best Practices, and SEO.
 
----
+- **Performance** uses inline styles, system fonts, responsive WebP images, and deferred loading of the optional WebGL module. Check LCP, total blocking time, and layout shifts when scores change.
+- **Accessibility** covers a single primary heading per route, keyboard navigation, accessible control names, contrast, and image alternatives. Also test the mobile menu and skip link with a keyboard.
+- **Best Practices** checks browser errors and other automated signals. Verify dependency advisories with `npm audit` and test the response security policy separately.
+- **SEO** checks per-page titles and descriptions, canonical URLs, and crawlability. Verify that the sitemap and robots file agree with the site origin and that structured data parses as JSON.
 
-## 1. Performance (Target: 100)
-
-- Zero Client JavaScript: Komponen `.astro` menghasilkan static HTML tanpa JS hydration saat dimuat. Total Blocking Time bernilai 0 ms.
-- Cumulative Layout Shift (CLS = 0): Semua gambar, avatar, dan SVG wajib memiliki atribut width dan height eksplisit atau CSS aspect-ratio tetap.
-- First Contentful Paint (FCP < 0.6s): Inlined critical CSS menghindari pemblokiran render melalui permintaan HTTP tambahan.
-- Font Loading: Menggunakan system font modern atau web font dengan properti font-display: swap.
-- Kompresi dan Caching: Caching statis otomatis dan kompresi Brotli di Cloudflare Pages.
-
----
-
-## 2. Accessibility (Target: 100)
-
-- Rasio Kontras Warna: Mengikuti pedoman WCAG AAA dengan rasio kontras teks terhadap latar belakang di atas 7:1.
-- Accessible Names: Setiap tombol interaktif dan link ikon wajib memiliki atribut aria-label deskriptif.
-- Navigasi Keyboard: State focus-visible yang jelas dengan outline kontras untuk navigasi tombol Tab.
-- Semantic HTML5: Struktur hierarki heading tertib (satu tag h1, diikuti h2 dan h3 tanpa melompati tingkatan).
-
----
-
-## 3. Best Practices (Target: 100)
-
-- Security Headers: Dikonfigurasi melalui `public/_headers` (HSTS, X-Content-Type-Options: nosniff, X-Frame-Options: DENY, Referrer-Policy).
-- HTTPS: Diaktifkan secara default oleh Cloudflare Pages dengan TLS 1.3.
-- Bebas Kesalahan Konsol: Memastikan tidak ada script pihak ketiga yang menyebabkan error atau warning di browser console.
-
----
-
-## 4. Search Engine Optimization / SEO (Target: 100)
-
-- Metadata Lengkap: Tag title unik, meta description informatif, canonical URL, dan viewport meta tag.
-- OpenGraph dan Twitter Cards: Preview tautan saat dibagikan di platform sosial.
-- Structured Data: Skema schema.org bertipe Organization dan WebSite menggunakan JSON-LD.
-- Robots.txt dan Sitemap: Menyediakan file robots.txt statis dan sitemap XML otomatis via `@astrojs/sitemap`.
+Lighthouse scores depend on the browser, hardware, and hosting environment. Compare results under the same conditions.
