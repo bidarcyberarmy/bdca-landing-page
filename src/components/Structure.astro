@@ -1,281 +1,288 @@
 ---
-import { teamMembers, divisions } from '../data/team';
+import MemberCard from './MemberCard.astro';
+import { rosterPeriod, teamGroups } from '../data/team';
 
-const bphMembers = teamMembers.filter((m) => m.divisionId === 'bph');
-const divisionalMembers = teamMembers.filter((m) => m.divisionId !== 'bph');
+const [leadership, ...divisions] = teamGroups;
+const memberCount = teamGroups.reduce((total, group) => total + group.members.length, 0);
+const groupIcons: Partial<Record<(typeof teamGroups)[number]['id'], string>> = {
+  education: 'M12 7v14M3 5c3-2 6-2 9 0 3-2 6-2 9 0v14c-3-2-6-2-9 0-3-2-6-2-9 0V5Z',
+  software: 'm8 6-6 6 6 6m8-12 6 6-6 6m-2-15-4 18',
+  creative: 'm16 4 4 4M4 20l4-1 12-12a2.8 2.8 0 0 0-4-4L4 15l-1 6 1-1Z',
+  relations: 'M15 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2m18 0v-2a4 4 0 0 0-3-3.9M13 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0Zm5-3.9a4 4 0 0 1 0 7.8',
+};
 ---
 
-<section id="members" class="members section">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-tag">Community Roster</span>
-      <h2 class="section-title">Members & Leadership</h2>
-      <p class="section-subtitle">
-        Susunan pengurus dan CTF players aktif yang menggerakkan riset kerentanan, operasional, dan kompetisi BDCA.
+<section id="members" class="roster wrap" aria-labelledby="roster-title">
+  <svg class="roster-gradients" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="roster-wave-back" x2="100%" y2="45%">
+        <stop stop-color="#81a4d4" />
+        <stop offset="54%" stop-color="#617795" />
+        <stop offset="100%" stop-color="#90abcf" />
+      </linearGradient>
+      <linearGradient id="roster-wave-front" x2="0%" y2="100%">
+        <stop stop-color="#6983ae" />
+        <stop offset="48%" stop-color="#365682" />
+        <stop offset="100%" style="stop-color: var(--roster-caption)" />
+      </linearGradient>
+    </defs>
+  </svg>
+  <div class="roster-top">
+    <div class="roster-intro">
+      <p class="eyebrow">03 / The people of BDCA</p>
+      <h2 class="display-title" id="roster-title">Organizational<br /><span class="accent">Structure</span></h2>
+      <p class="roster-description">
+        Meet the 2026–2027 Bina Darma Cyber Army team. Five groups work together to run the community.
       </p>
+      <ul class="roster-stats" role="list">
+        <li>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d={groupIcons.relations} />
+          </svg>
+          {memberCount} people
+        </li>
+        <li>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5" />
+          </svg>
+          {teamGroups.length} groups
+        </li>
+      </ul>
     </div>
 
-    <!-- 1. Executive Board (BPH) -->
-    <div class="roster-group">
-      <div class="group-title-wrap">
-        <h3 class="group-title">Executive Board (BPH)</h3>
-        <span class="group-tag">Core Leadership</span>
+    <section class="leadership" aria-labelledby="leadership-title">
+      <div class="leadership-intro">
+        <p class="leadership-period">{rosterPeriod}</p>
+        <h3 id="leadership-title">{leadership.name}</h3>
+        <p class="leadership-description">{leadership.description}</p>
       </div>
-
-      <div class="members-grid bph-grid">
-        {bphMembers.map((member) => (
-          <div class="hcs-card member-card">
-            <div class="member-top">
-              <img 
-                src={member.avatar} 
-                alt={`Avatar ${member.name}`} 
-                width="72" 
-                height="72" 
-                class="member-avatar"
-                loading="lazy" 
-              />
-              <div class="member-badge-wrap">
-                <span class="role-pill">{member.role}</span>
-              </div>
-            </div>
-
-            <div class="member-info">
-              <h4 class="member-name">{member.name}</h4>
-              {member.bio && <p class="member-quote">"{member.bio}"</p>}
-
-              {member.certifications && member.certifications.length > 0 && (
-                <div class="cert-list">
-                  {member.certifications.map((c) => (
-                    <span class="cert-item">{c}</span>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div class="member-links">
-              {member.github && (
-                <a href={member.github} target="_blank" rel="noopener noreferrer" class="member-social-btn" aria-label={`GitHub ${member.name}`}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-                </a>
-              )}
-              {member.linkedin && (
-                <a href={member.linkedin} target="_blank" rel="noopener noreferrer" class="member-social-btn" aria-label={`LinkedIn ${member.name}`}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-                </a>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-
-    <!-- 2. Technical Divisions & CTF Players -->
-    <div class="roster-group">
-      <div class="group-title-wrap">
-        <h3 class="group-title">Divisional Players & Specialists</h3>
-        <span class="group-tag">Offensive • Defensive • R&D • Media</span>
-      </div>
-
-      <div class="members-grid div-grid">
-        {divisionalMembers.map((member) => (
-          <div class="hcs-card member-card">
-            <div class="member-top">
-              <img 
-                src={member.avatar} 
-                alt={`Avatar ${member.name}`} 
-                width="60" 
-                height="60" 
-                class="member-avatar"
-                loading="lazy" 
-              />
-              <span class="division-pill">{member.divisionName}</span>
-            </div>
-
-            <div class="member-info">
-              <span class="role-sub">{member.role}</span>
-              <h4 class="member-name">{member.name}</h4>
-              {member.bio && <p class="member-quote">"{member.bio}"</p>}
-
-              {member.certifications && member.certifications.length > 0 && (
-                <div class="cert-list">
-                  {member.certifications.map((c) => (
-                    <span class="cert-item">{c}</span>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div class="member-links">
-              {member.github && (
-                <a href={member.github} target="_blank" rel="noopener noreferrer" class="member-social-btn" aria-label={`GitHub ${member.name}`}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-                </a>
-              )}
-              {member.linkedin && (
-                <a href={member.linkedin} target="_blank" rel="noopener noreferrer" class="member-social-btn" aria-label={`LinkedIn ${member.name}`}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-                </a>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+      <ul class="leadership-members" role="list">
+        {leadership.members.map((member) => <MemberCard member={member} compact />)}
+      </ul>
+    </section>
   </div>
+
+  <div class="divisions">
+    {divisions.map((group) => (
+      <section
+        class:list={['division', { 'division-education': group.id === 'education' }]}
+        aria-labelledby={`division-${group.id}`}
+      >
+        <header class="division-header">
+          <span class="division-icon" aria-hidden="true">
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">
+              <path d={groupIcons[group.id]} />
+            </svg>
+          </span>
+          <div class="division-copy">
+            <h3 id={`division-${group.id}`}>{group.name}</h3>
+            <p>{group.description}</p>
+          </div>
+          <span class="division-count">{group.members.length} members</span>
+        </header>
+        <ul class="division-members" role="list">
+          {group.members.map((member) => <MemberCard member={member} />)}
+        </ul>
+      </section>
+    ))}
+  </div>
+  <p class="roster-note">BDCA © 2026 / Universitas Bina Darma</p>
 </section>
 
 <style>
-  .members {
-    border-top: 1px solid var(--border-subtle);
+  .roster {
+    --panel-gap: clamp(.75rem, 1.2vw, 1.15rem);
+    --panel-fill: linear-gradient(145deg, #f8fafe 12%, #f6f8fe 61%, #f4f8fe);
+    --panel-radius: 1.2rem;
+    --heading-gradient: linear-gradient(95deg, #1151d8, #105ee7 54%, #1889f4);
+    --roster-caption: #1b3661;
+    padding-block-end: var(--section-space);
   }
-
-  .roster-group {
-    margin-bottom: 3.5rem;
-  }
-
-  .group-title-wrap {
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border-subtle);
-    padding-bottom: 0.75rem;
-  }
-
-  .group-title {
-    font-size: 1.35rem;
-    color: var(--text-primary);
-  }
-
-  .group-tag {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--text-muted);
-  }
-
-  .members-grid {
+  .roster-gradients { position: absolute; }
+  .roster-top {
     display: grid;
-    gap: 1.25rem;
+    align-items: stretch;
+    gap: clamp(1.2rem, 2.2vw, 2.25rem);
+    margin-bottom: clamp(1rem, 2.1vw, 2rem);
   }
-
-  .bph-grid {
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  .roster-intro { min-width: 0; align-self: center; }
+  .roster-intro .eyebrow { margin-bottom: .85rem; }
+  .roster-intro h2 {
+    font-size: clamp(1.85rem, 3.55vw, 3.55rem);
+    overflow-wrap: anywhere;
   }
-
-  .div-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  .roster-description {
+    margin-top: 1rem;
+    max-width: 34rem;
+    color: var(--muted);
+    text-wrap: pretty;
   }
-
-  .member-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  .roster-stats, .leadership-members, .division-members {
+    list-style: none;
+    padding: 0;
   }
-
-  .member-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-  }
-
-  .member-avatar {
-    border-radius: var(--radius-sm);
-    object-fit: cover;
-    background: #0f172a;
-    border: 1px solid var(--border-subtle);
-  }
-
-  .role-pill {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    font-weight: 700;
-    color: var(--cyan-accent);
-    background: rgba(56, 189, 248, 0.08);
-    border: 1px solid rgba(56, 189, 248, 0.2);
-    padding: 0.2rem 0.55rem;
-    border-radius: var(--radius-xs);
-    text-transform: uppercase;
-  }
-
-  .division-pill {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    background: rgba(255, 255, 255, 0.04);
-    padding: 0.2rem 0.5rem;
-    border-radius: var(--radius-xs);
-  }
-
-  .member-info {
-    flex-grow: 1;
-    margin-bottom: 1.25rem;
-  }
-
-  .role-sub {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--blue-primary);
-    margin-bottom: 0.25rem;
-  }
-
-  .member-name {
-    font-size: 1.15rem;
-    color: var(--text-primary);
-    margin-bottom: 0.35rem;
-  }
-
-  .member-quote {
-    font-size: 0.84375rem;
-    color: var(--text-secondary);
-    font-style: italic;
-    line-height: 1.5;
-    margin-bottom: 0.75rem;
-  }
-
-  .cert-list {
+  .roster-stats {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.35rem;
+    gap: .55rem;
+    margin-top: 1.15rem;
   }
-
-  .cert-item {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    color: #34d399;
-    background: rgba(16, 185, 129, 0.08);
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    padding: 0.1rem 0.45rem;
-    border-radius: var(--radius-xs);
-  }
-
-  .member-links {
-    display: flex;
-    gap: 0.5rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid var(--border-subtle);
-  }
-
-  .member-social-btn {
+  .roster-stats li {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    border-radius: var(--radius-xs);
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border-subtle);
-    color: var(--text-secondary);
-    transition: all var(--transition-fast);
+    gap: .45rem;
+    padding: .44rem .72rem;
+    border: 1px solid var(--line);
+    border-radius: 2rem;
+    background: linear-gradient(160deg, #f7f9ff, #dfecfd);
+    font-size: .8125rem;
+    font-weight: 700;
   }
-
-  .member-social-btn:hover {
-    color: var(--text-primary);
-    border-color: var(--border-bright);
-    background: rgba(255, 255, 255, 0.08);
+  .roster-stats svg { color: var(--accent-deep); }
+  .leadership {
+    display: grid;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--panel-radius);
+    background: var(--panel-fill);
+  }
+  .leadership-intro {
+    display: grid;
+    align-content: center;
+    gap: .75rem;
+    padding: clamp(1rem, 1.8vw, 1.75rem);
+    color: #fff;
+    background: linear-gradient(135deg, #214880, #113060 53%, #335585);
+  }
+  .leadership-period {
+    font-size: .72rem;
+    font-weight: 700;
+    color: #dbe9fc;
+    letter-spacing: .105em;
+  }
+  .leadership h3 {
+    font-size: clamp(1.45rem, 2vw, 2.1rem);
+    letter-spacing: -.045em;
+    text-wrap: balance;
+  }
+  .leadership-description {
+    max-width: 28ch;
+    color: #e2edfc;
+    font-size: .875rem;
+    text-wrap: pretty;
+  }
+  .leadership-members, .division-members { display: grid; gap: .65rem; }
+  .leadership-members {
+    --portrait-height: clamp(12rem, 17.7vw, 17rem);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: var(--panel-gap);
+  }
+  .divisions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--panel-gap);
+  }
+  .division {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-width: 0;
+    padding: var(--panel-gap);
+    border: 1px solid var(--line);
+    border-radius: var(--panel-radius);
+    background: var(--panel-fill);
+    box-shadow: 0 2px 3px #18447e0b;
+  }
+  .division-header {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-content: start;
+    align-items: start;
+    gap: .45rem .65rem;
+    margin-bottom: .75rem;
+    min-height: 5.2rem;
+  }
+  .division-icon {
+    display: grid;
+    place-items: center;
+    width: clamp(2.35rem, 3.2vw, 2.85rem);
+    aspect-ratio: 1;
+    grid-row: span 2;
+    border-radius: .75rem;
+    background: linear-gradient(135deg, #1a5dc2, #103876 55%, #0e2957);
+    color: #fff;
+  }
+  .division-copy { display: contents; }
+  .division-copy h3 {
+    grid-column: 2 / -1;
+    font-size: clamp(1rem, 1.37vw, 1.225rem);
+    letter-spacing: -.035em;
+    overflow-wrap: anywhere;
+  }
+  .division-copy p {
+    color: var(--muted);
+    font-size: .775rem;
+    line-height: 1.38;
+    text-wrap: pretty;
+  }
+  .division-count {
+    align-self: center;
+    padding: .23rem .43rem;
+    border-radius: 1rem;
+    background: linear-gradient(160deg, #edf4fe, #dae8fd);
+    color: #183860;
+    font-size: .625rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .division-members {
+    --portrait-height: clamp(10.7rem, 13.2vw, 12.75rem);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+  }
+  .division-education { --caption-height: 4.65rem; }
+  .roster-note {
+    margin-top: .9rem;
+    color: var(--muted);
+    font-size: .75rem;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+  }
+  @media (min-width: 880px) {
+    .leadership {
+      grid-template-columns: minmax(10.25rem, .95fr) minmax(0, 3fr);
+      background:
+        linear-gradient(102deg, transparent 23%, #f2f6fd 51%, #f4f8fe),
+        radial-gradient(ellipse 76% 71% at 62% 133%, #8db3e3 19%, #5690d4 76%, transparent 77%),
+        radial-gradient(ellipse 43% 65% at 4% 112%, #4671aa, transparent 85%),
+        linear-gradient(106deg, #214880, #113060 17%, #335585 25%, #8db3e3 44%, #f2f6fd 65%);
+    }
+    .leadership-intro { background: transparent; }
+  }
+  @media (min-width: 621px) {
+    .division:not(.division-education) .division-members { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (min-width: 1120px) {
+    .roster-top { grid-template-columns: minmax(0, 1fr) minmax(0, 2.55fr); }
+    .divisions { grid-template-columns: minmax(0, 1.32fr) repeat(3, minmax(0, 1fr)); }
+    .division { grid-row: span 2; grid-template-rows: subgrid; }
+    .division-header { margin-bottom: 0; }
+  }
+  @media (min-width: 1120px) and (max-width: 1320px), (min-width: 621px) and (max-width: 800px) {
+    .division-header { grid-template-columns: auto minmax(0, 1fr); min-height: 6rem; }
+    .division-icon { grid-row: span 3; }
+    .division-count { justify-self: start; align-self: start; }
+  }
+  @media (max-width: 620px) {
+    .divisions { grid-template-columns: minmax(0, 1fr); }
+    .division-header { min-height: 0; }
+  }
+  @media (max-width: 540px) {
+    .leadership-members { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 370px) {
+    .division-header { grid-template-columns: auto minmax(0, 1fr); }
+    .division-icon { grid-row: span 3; }
+    .division-count { justify-self: start; }
   }
 </style>
