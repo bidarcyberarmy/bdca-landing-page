@@ -10,8 +10,8 @@ export default defineConfig({
     inlineStylesheets: 'always'
   },
   vite: {
-    css: {
-      postcss: {}
+    build: {
+      assetsInlineLimit: 0
     }
   }
 });
