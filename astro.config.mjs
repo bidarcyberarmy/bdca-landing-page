@@ -3,7 +3,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://bdca-landing-page.azerorill.workers.dev',
+  site: 'https://bdca-landing-page.vercel.app',
   integrations: [sitemap()],
   devToolbar: { enabled: false },
   compressHTML: true,
