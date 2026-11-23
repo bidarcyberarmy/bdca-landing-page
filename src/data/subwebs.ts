@@ -1,49 +1,55 @@
 import { siteConfig } from './site';
+import type { LocalizedText } from './locales';
+
+export const portalCategories = {
+  Community: 'Komunitas', Credential: 'Kredensial', Portal: 'Portal',
+  Competition: 'Kompetisi', 'Training and Lab': 'Pelatihan dan Lab',
+};
 
 type SubWeb = {
-  title: string;
-  description: string;
-  category: "Community" | "Credential" | "Portal" | "Competition" | "Training and Lab";
+  title: LocalizedText;
+  description: LocalizedText;
+  category: keyof typeof portalCategories;
 } & ({ status: "online"; url: string } | { status: "maintenance" | "internal" });
 
 export const subWebs: SubWeb[] = [
   {
-    title: "We Are BDCA (Members & Showcase)",
-    description: "Browse member profiles, achievements, and projects from the BDCA community.",
+    title: { en: "We Are BDCA (Members & Showcase)", id: "We Are BDCA (Anggota & Karya)" },
+    description: { en: "Browse member profiles, achievements, and projects from the BDCA community.", id: "Lihat profil anggota, prestasi, dan proyek komunitas BDCA." },
     url: "https://weare.bidarcyberarmy.org",
     category: "Community",
     status: "online"
   },
   {
-    title: "BDCA Credential & Cert Verification",
-    description: "Verify BDCA membership, skills, and workshop certificates.",
+    title: { en: "BDCA Credential & Cert Verification", id: "Verifikasi Kredensial & Sertifikat BDCA" },
+    description: { en: "Verify BDCA membership, skills, and workshop certificates.", id: "Verifikasi keanggotaan, keterampilan, dan sertifikat lokakarya BDCA." },
     url: "https://cert.bidarcyberarmy.org",
     category: "Credential",
     status: "online"
   },
   {
-    title: "BDCA Official Web & Knowledge Base",
-    description: "Visit BDCA’s main website for security research documentation and public repositories.",
+    title: { en: "BDCA Official Web & Knowledge Base", id: "Situs Resmi & Pusat Pengetahuan BDCA" },
+    description: { en: "Visit BDCA’s main website for security research documentation and public repositories.", id: "Kunjungi situs utama BDCA untuk membaca dokumentasi riset keamanan dan mengakses repositori publik." },
     url: siteConfig.url,
     category: "Portal",
     status: "online"
   },
   {
-    title: "CTFtime Global Team Ranking",
-    description: "Follow BDCA’s record in national and international Capture the Flag competitions.",
+    title: { en: "CTFtime Global Team Ranking", id: "Peringkat Tim Global CTFtime" },
+    description: { en: "Follow BDCA’s record in national and international Capture the Flag competitions.", id: "Ikuti rekam jejak BDCA di kompetisi Capture the Flag nasional dan internasional." },
     url: siteConfig.links.ctftime,
     category: "Competition",
     status: "online"
   },
   {
-    title: "BDCA VulnLab & Practice Sandbox",
-    description: "Practice offensive and defensive security in isolated labs with simulated networks and intentionally vulnerable machines.",
+    title: { en: "BDCA VulnLab & Practice Sandbox", id: "BDCA VulnLab & Lab Latihan" },
+    description: { en: "Practice offensive and defensive security in isolated labs with simulated networks and intentionally vulnerable machines.", id: "Latih keamanan ofensif dan defensif di lab terisolasi dengan simulasi jaringan dan mesin yang sengaja dibuat rentan." },
     category: "Training and Lab",
     status: "internal"
   },
   {
-    title: "BDCA Community Discord & Network",
-    description: "Connect with members, ask technical questions, and keep up with BDCA events.",
+    title: { en: "BDCA Community Discord & Network", id: "Discord Komunitas BDCA" },
+    description: { en: "Connect with members, ask technical questions, and keep up with BDCA events.", id: "Kenali anggota, ajukan pertanyaan teknis, dan ikuti kegiatan BDCA." },
     url: siteConfig.links.discord,
     category: "Community",
     status: "online"

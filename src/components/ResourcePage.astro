@@ -1,0 +1,37 @@
+---
+import Achievements from './Achievements.astro';
+import SubWebHub from './SubWebHub.astro';
+import { copy } from '../data/copy';
+import { pagePath, type Locale, type Page } from '../data/locales';
+
+interface Props {
+  locale: Locale;
+  page: Exclude<Page, 'home'>;
+}
+
+const { locale, page } = Astro.props;
+const { label, title, description } = copy[locale].resources[page];
+---
+
+<main id="main-content" class="wrap resources-page">
+  <a class="text-link" href={pagePath(locale)}>← {copy[locale].resources.back}</a>
+  <p class="eyebrow">{label}</p>
+  <h1 class="display-title">{title}</h1>
+  <p class="resources-intro">{description}</p>
+  {page === 'ecosystem' ? <SubWebHub {locale} /> : <Achievements {locale} />}
+</main>
+
+<style>
+  .resources-page { padding-block: clamp(2.5rem, 6vw, 6rem); }
+  .resources-page > .eyebrow { margin-block: 2rem .85rem; }
+  .resources-intro { color: var(--muted); max-width: 40rem; margin-block: 1rem 2.25rem; }
+  .resources-page :global(.resources) { padding: 0; list-style: none; border-block-start: 1px solid var(--line); }
+  .resources-page :global(.resources li) { display: flex; align-items: center; justify-content: space-between; gap: 1rem 2rem; padding-block: 1.5rem; border-block-end: 1px solid var(--line); }
+  .resources-page :global(.resources h2) { font-size: clamp(1.2rem, 2.2vw, 1.65rem); letter-spacing: -.035em; margin-block: .4rem; }
+  .resources-page :global(.resources h2 + p) { color: var(--muted); max-width: 44rem; }
+  .resources-page :global(.resources a), .resources-page :global(.resource-status) { flex: none; }
+  .resources-page :global(.resource-status) { color: var(--muted); font-size: .875rem; }
+  @media (max-width: 700px) {
+    .resources-page :global(.resources li) { align-items: flex-start; flex-direction: column; gap: .35rem; }
+  }
+</style>

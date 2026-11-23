@@ -1,0 +1,138 @@
+---
+import { copy } from '../data/copy';
+import type { Locale } from '../data/locales';
+
+interface Props {
+  locale: Locale;
+}
+
+const { certificates } = copy[Astro.props.locale];
+---
+
+<section id="certificates" class="project wrap" aria-labelledby="certificates-title">
+  <div class="project-panel">
+    <div class="project-intro">
+      <p class="eyebrow">{certificates.label}</p>
+      <h2 id="certificates-title" class="display-title">{certificates.title}</h2>
+      <p class="project-description">{certificates.description}</p>
+    </div>
+
+    <div class="event-info">
+      <h3>{certificates.event}</h3>
+      <p>{certificates.access}</p>
+      <div class="project-actions">
+        <details>
+          <summary class="text-link">
+            {certificates.how} <span class="arrow" aria-hidden="true">→</span>
+          </summary>
+          <ol>
+            {certificates.steps.map((step) => <li>{step}</li>)}
+          </ol>
+        </details>
+        <a class="text-link portal-link" href="https://cert.bidarcyberarmy.org/" rel="noopener noreferrer">
+          {certificates.open} <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .project {
+    margin-block-end: var(--section-space);
+  }
+
+  .project-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(2rem, 7vw, 7rem);
+    padding: clamp(1.25rem, 4vw, 4rem);
+    background: #e7f3fc;
+  }
+
+  .project-intro {
+    border-inline-start: .25rem solid var(--accent-bright);
+    padding-inline-start: clamp(.9rem, 2.4vw, 2rem);
+  }
+
+  .project-intro h2 {
+    margin-block: .65rem .85rem;
+    font-size: clamp(2rem, 4.4vw, 3.6rem);
+    overflow-wrap: anywhere;
+  }
+
+  .project-description {
+    max-width: 40ch;
+    font-size: clamp(1rem, 1.65vw, 1.35rem);
+    text-wrap: pretty;
+  }
+
+  .event-info {
+    container-type: inline-size;
+    border-block: 1px solid #8da6c1;
+    padding-block: clamp(.85rem, 1.7vw, 1.4rem);
+  }
+
+  .event-info h3 {
+    font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+    letter-spacing: -.035em;
+  }
+
+  .event-info p {
+    margin-block: .55rem .35rem;
+    color: var(--muted);
+  }
+
+  .project-actions {
+    --portal-width: 7.5rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--portal-width);
+    align-items: start;
+    column-gap: .75rem;
+  }
+
+  .project-actions .text-link { color: var(--accent); }
+  .project-actions .text-link:hover { text-decoration: underline; }
+  .project-actions details {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  .portal-link {
+    grid-area: 1 / 2;
+    justify-self: start;
+    z-index: 1;
+    white-space: nowrap;
+  }
+
+  summary {
+    list-style: none;
+    width: fit-content;
+    max-width: calc(100% - var(--portal-width) - .75rem);
+    cursor: pointer;
+  }
+
+  summary::-webkit-details-marker { display: none; }
+  details[open] .arrow { transform: rotate(90deg); }
+
+  ol {
+    margin-block-start: .5rem;
+    padding-inline-start: 1.25rem;
+    color: var(--muted);
+  }
+
+  li + li { margin-block-start: .25rem; }
+
+  @container (max-width: 16.5rem) {
+    .project-actions { display: block; }
+    summary { max-width: 100%; }
+    .portal-link { margin-block-start: .125rem; }
+  }
+
+  @media (max-width: 700px) {
+    .project-panel {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.4rem;
+    }
+  }
+</style>

@@ -1,16 +1,29 @@
 ---
 import { siteConfig } from '../data/site';
+import { copy } from '../data/copy';
+import type { Locale } from '../data/locales';
+
+interface Props {
+  locale: Locale;
+}
+
+const { community } = copy[Astro.props.locale];
 ---
 
 <section id="community" class="community wrap wrap-wide" aria-labelledby="community-title">
   <div class="community-content">
-    <p class="community-kicker">Stay curious. Stay connected.</p>
-    <h2 class="display-title" id="community-title">There’s room for<br />your next idea.</h2>
-    <p class="community-description">Discover a community of students learning, experimenting, and building together at Universitas Bina Darma.</p>
-    <a class="button button-light" href={siteConfig.links.instagram} rel="noopener noreferrer">Connect with BDCA <span aria-hidden="true">↗</span></a>
+    <p class="community-kicker">{community.kicker}</p>
+    <h2 class="display-title" id="community-title">{community.title}<br />{community.subtitle}</h2>
+    <p class="community-description">{community.description}</p>
+    <a class="button button-light" href={siteConfig.links.instagram} rel="noopener noreferrer">{community.join} <span aria-hidden="true">↗</span></a>
   </div>
   <figure class="community-globe">
-    <img src="/assets/cloud-globe-palembang.webp" width="640" height="640" alt="Globe marking the BDCA base in Palembang" loading="lazy" decoding="async" />
+    <img
+      src="/assets/cloud-globe-palembang.webp"
+      srcset="/assets/cloud-globe-palembang-384.webp 384w, /assets/cloud-globe-palembang.webp 640w"
+      sizes="auto, (max-width: 760px) min(73vw, 28rem), min(37vw, 35rem)"
+      width="640" height="640" alt={community.globe} loading="lazy" decoding="async"
+    />
     <span class="base-marker" aria-hidden="true"></span>
   </figure>
 </section>

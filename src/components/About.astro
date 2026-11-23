@@ -1,19 +1,24 @@
 ---
+import { copy } from '../data/copy';
+import type { Locale } from '../data/locales';
+
+interface Props {
+  locale: Locale;
+}
+
+const { about } = copy[Astro.props.locale];
 ---
 
 <section id="about" class="about wrap" aria-labelledby="about-title">
   <div>
-    <p class="eyebrow">01 / Who we are</p>
-    <h2 class="display-title" id="about-title">A place to<br /><span class="accent">become more.</span></h2>
+    <p class="eyebrow">01 / {about.kicker}</p>
+    <h2 class="display-title" id="about-title">{about.title}<br /><span class="accent">{about.accent}</span></h2>
   </div>
   <div class="about-copy">
     <p class="eyebrow">Bina Darma Cyber Army</p>
-    <p class="intro">A student-led technology community at Universitas Bina Darma in Palembang. We explore cybersecurity, build software, share knowledge, and grow through practical collaboration.</p>
+    <p class="intro">{about.description}</p>
     <ul class="topics" role="list">
-      <li>Student community</li>
-      <li>Cybersecurity</li>
-      <li>Software engineering</li>
-      <li>Research</li>
+      {about.topics.map((topic) => <li>{topic}</li>)}
     </ul>
   </div>
 </section>

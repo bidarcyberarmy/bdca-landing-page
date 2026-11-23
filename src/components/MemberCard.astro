@@ -1,38 +1,50 @@
 ---
-import type { TeamMember } from '../data/team';
+import { Image } from 'astro:assets';
+import { rolesInIndonesian, type TeamMember } from '../data/team';
+import type { Locale } from '../data/locales';
 
 interface Props {
   member: TeamMember;
+  locale: Locale;
   compact?: boolean;
 }
 
-const { member, compact = false } = Astro.props;
+const { member, locale, compact = false } = Astro.props;
+const role = locale === 'id' ? rolesInIndonesian[member.role] : member.role;
 ---
 
 <li class:list={['member-card', { compact }]}>
-  <img
-    class:list={['portrait', { placeholder: !member.avatar }]}
-    src={member.avatar ?? '/assets/team/placeholder.svg'}
-    width="116"
-    height="144"
-    loading="lazy"
-    decoding="async"
-    alt=""
-  />
+  <div class:list={['portrait-frame', { 'has-photo': member.avatar }]}>
+    {member.avatar ? (
+      <Image
+        class="portrait"
+        src={member.avatar}
+        widths={[180, 288, 432]}
+        sizes="auto, (max-width: 540px) 120px, 240px"
+        format="webp"
+        quality={84}
+        loading="lazy"
+        decoding="async"
+        alt=""
+      />
+    ) : (
+      <img class="portrait" src="/assets/team/placeholder.svg" width="288" height="360" loading="lazy" decoding="async" alt="" />
+    )}
+  </div>
   <div class="member-info">
     <svg class="card-wave" viewBox="0 0 320 34" preserveAspectRatio="none" aria-hidden="true">
       <path fill="url(#roster-wave-back)" d="M0 15C57-14 111 0 165 18S257 37 320 10V34H0Z" />
       <path fill="url(#roster-wave-front)" d="M0 24C60 1 105 10 162 23S253 39 320 22V34H0Z" />
     </svg>
     <p class="member-name">{member.name}</p>
-    <p class="member-role">{member.role}</p>
+    <p class="member-role">{role}</p>
   </div>
 </li>
 
 <style>
   .member-card {
-    display: flex;
-    align-items: end;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
     min-width: 0;
     min-height: var(--portrait-height, 11.25rem);
     position: relative;
@@ -42,27 +54,38 @@ const { member, compact = false } = Astro.props;
     border-radius: .9rem;
     background: linear-gradient(132deg, #c6cfde, #c3ccdc 52%, #becadd);
   }
+  .portrait-frame {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+  }
+  .has-photo { background: #17223c; }
   .portrait {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center bottom;
   }
-  .placeholder { height: 69%; object-fit: contain; }
+  .has-photo .portrait {
+    object-fit: var(--portrait-fit, contain);
+    object-position: var(--portrait-pos, center bottom);
+    mask-image: var(--portrait-mask, linear-gradient(to right, transparent, #000 3%, #000 97%, transparent));
+  }
   .member-info {
     position: relative;
     width: 100%;
-    min-height: var(--caption-height, 3.75rem);
-    padding: .55rem clamp(.55rem, 1vw, .95rem) .65rem;
+    min-height: var(--caption-height, 3.3rem);
+    padding: .45rem clamp(.55rem, 1vw, .95rem) .6rem;
     background: linear-gradient(180deg, var(--roster-caption), #173059);
     color: #fff;
   }
   .card-wave {
     position: absolute;
-    inset: auto 0 calc(100% - 1px);
+    inset: auto 0 calc(100% - .3rem);
     width: 100%;
-    height: clamp(.95rem, 2.4vw, 1.8rem);
+    height: clamp(.65rem, 1.2vw, 1rem);
   }
   .member-name {
     font-size: clamp(.875rem, 1.12vw, 1.0625rem);
@@ -80,13 +103,11 @@ const { member, compact = false } = Astro.props;
   }
   @media (max-width: 540px) {
     .compact {
-      display: grid;
       grid-template-columns: clamp(4.75rem, 23vw, 6.75rem) minmax(0, 1fr);
-      align-items: stretch;
+      grid-template-rows: minmax(0, 1fr);
       min-height: 5.75rem;
     }
-    .compact .portrait { position: static; height: 100%; }
-    .compact .placeholder { padding: .3rem; }
+    .compact .portrait-frame:not(.has-photo) { margin: .3rem; }
     .compact .member-info { display: grid; align-content: center; padding: .65rem .85rem; }
     .compact .card-wave { display: none; }
   }

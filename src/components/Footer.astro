@@ -1,28 +1,43 @@
 ---
 import { siteConfig } from '../data/site';
+import { copy } from '../data/copy';
+import { pagePath, type Locale } from '../data/locales';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { footer, nav } = copy[locale];
+const home = pagePath(locale);
 ---
 
 <footer id="contact" class="site-footer">
   <div class="wrap wrap-wide footer-inner">
     <div class="footer-brand">
-      <a href="/" aria-label="Bina Darma Cyber Army home">
-        <img src="/assets/bdca-full-footer.webp" width="420" height="190" alt="" loading="lazy" decoding="async" />
+      <a href={home} aria-label={footer.home}>
+        <img
+          src="/assets/bdca-full-footer-210.webp"
+          srcset="/assets/bdca-full-footer-210.webp 210w, /assets/bdca-full-footer.webp 420w"
+          sizes="auto, clamp(9.25rem, 13.5vw, 13.125rem)"
+          width="420" height="190" alt="" loading="lazy" decoding="async"
+        />
       </a>
       <p>Universitas Bina Darma · Palembang, Indonesia</p>
     </div>
-    <nav aria-label="Explore BDCA">
-      <h2>Explore</h2>
-      <a href="/#community">Community</a>
-      <a href="/#programs">Learning & research</a>
-      <a href="/ecosystem/" id="subwebs">Software projects</a>
-      <a href="/activities/" id="achievements">Activities & achievements</a>
+    <nav aria-label={footer.exploreLabel}>
+      <h2>{footer.explore}</h2>
+      <a href={`${home}#community`}>{nav.community}</a>
+      <a href={`${home}#programs`}>{footer.learning}</a>
+      <a href={pagePath(locale, 'ecosystem')} id="subwebs">{footer.software}</a>
+      <a href={pagePath(locale, 'activities')} id="achievements">{footer.activities}</a>
     </nav>
-    <nav aria-label="Find BDCA online">
-      <h2>Find us</h2>
+    <nav aria-label={footer.findLabel}>
+      <h2>{footer.find}</h2>
       <a href={siteConfig.links.github} rel="noopener noreferrer">GitHub</a>
       <a href={siteConfig.links.instagram} rel="noopener noreferrer">Instagram</a>
       <a href={siteConfig.url} rel="noopener noreferrer">bidarcyberarmy.org</a>
-      <a href={`mailto:${siteConfig.contact.email}`}>Email BDCA</a>
+      <a href={`mailto:${siteConfig.contact.email}`}>{footer.email}</a>
     </nav>
   </div>
 </footer>

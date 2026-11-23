@@ -1,17 +1,24 @@
 ---
-import { achievements } from '../data/achievements';
+import { achievements, achievementCategories } from '../data/achievements';
+import type { Locale } from '../data/locales';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
 ---
 
 <ul class="resources" role="list">
   {achievements.map((achievement) => (
     <li>
       <div>
-        <p class="eyebrow">{achievement.category} · {achievement.date}</p>
+        <p class="eyebrow">{locale === 'id' ? achievementCategories[achievement.category] : achievement.category} · {achievement.date[locale]}</p>
         <h2>{achievement.title}</h2>
-        {achievement.description && <p>{achievement.description}</p>}
+        {achievement.description && <p>{achievement.description[locale]}</p>}
       </div>
       <div class="resource-status">
-        {achievement.rank && <strong>{achievement.rank}</strong>}
+        {achievement.rank && <strong>{achievement.rank[locale]}</strong>}
         {achievement.teamName && <p>{achievement.teamName}</p>}
       </div>
     </li>

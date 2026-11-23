@@ -1,20 +1,29 @@
 ---
-import { subWebs } from '../data/subwebs';
+import { subWebs, portalCategories } from '../data/subwebs';
+import { copy } from '../data/copy';
+import type { Locale } from '../data/locales';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { resources } = copy[locale];
 ---
 
 <ul class="resources" role="list">
   {subWebs.map((resource) => (
     <li>
       <div>
-        <p class="eyebrow">{resource.category}</p>
-        <h2>{resource.title}</h2>
-        <p>{resource.description}</p>
+        <p class="eyebrow">{locale === 'id' ? portalCategories[resource.category] : resource.category}</p>
+        <h2>{resource.title[locale]}</h2>
+        <p>{resource.description[locale]}</p>
       </div>
       {resource.status === 'online' ? (
         <a class="text-link" href={resource.url} rel="noopener noreferrer">
-          Open portal <span class="sr-only">{resource.title}</span><span aria-hidden="true">↗</span>
+          {resources.open} <span class="sr-only">{resource.title[locale]}</span><span aria-hidden="true">↗</span>
         </a>
-      ) : <span class="resource-status">{resource.status === 'internal' ? 'Internal' : 'Under maintenance'}</span>}
+      ) : <span class="resource-status">{resources[resource.status]}</span>}
     </li>
   ))}
 </ul>

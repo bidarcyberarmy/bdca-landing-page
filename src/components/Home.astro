@@ -1,0 +1,26 @@
+---
+import Hero from './Hero.astro';
+import About from './About.astro';
+import Programs from './Programs.astro';
+import Bdcahoot from './Bdcahoot.astro';
+import Certificates from './Certificates.astro';
+import Structure from './Structure.astro';
+import Community from './Community.astro';
+import type { Locale } from '../data/locales';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<main id="main-content">
+  <Hero {locale} />
+  <About {locale} />
+  <Programs {locale} />
+  <Bdcahoot {locale} />
+  <Certificates {locale} />
+  <Structure {locale} />
+  <Community {locale} />
+</main>

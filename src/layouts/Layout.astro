@@ -1,15 +1,19 @@
 ---
 import '../styles/global.css';
 import { siteConfig } from '../data/site';
+import { copy } from '../data/copy';
+import { locales, pagePath, type Locale, type Page } from '../data/locales';
 
 interface Props {
   title: string;
   description: string;
+  locale: Locale;
+  page: Page;
 }
 
-const { title, description } = Astro.props;
+const { title, description, locale, page } = Astro.props;
 const siteURL = Astro.site ?? new URL(siteConfig.url);
-const canonicalURL = new URL(Astro.url.pathname, siteURL);
+const canonicalURL = new URL(pagePath(locale, page), siteURL);
 const socialImageURL = new URL(siteConfig.ogImage, siteURL);
 const organizationId = new URL('/#organization', siteURL).href;
 
@@ -23,7 +27,7 @@ const jsonLd = {
       "alternateName": siteConfig.shortName,
       "url": siteConfig.url,
       "logo": new URL('/assets/logo-emblem.webp', siteURL).href,
-      "description": siteConfig.description,
+      "description": siteConfig.description[locale],
       "sameAs": [
         siteConfig.links.github,
         siteConfig.links.instagram,
@@ -41,7 +45,7 @@ const jsonLd = {
       "@id": new URL('/#website', siteURL).href,
       "url": siteURL.href,
       "name": siteConfig.fullName,
-      "inLanguage": "en",
+      "inLanguage": locales,
       "publisher": {
         "@id": organizationId
       }
@@ -52,13 +56,17 @@ const structuredData = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f7faff" />
 
     <link rel="canonical" href={canonicalURL} />
+    {locales.map((language) => (
+      <link rel="alternate" hreflang={language} href={new URL(pagePath(language, page), siteURL)} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL(pagePath('en', page), siteURL)} />
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -71,7 +79,7 @@ const structuredData = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImageURL} />
     <meta property="og:site_name" content={siteConfig.fullName} />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content={locale === 'id' ? 'id_ID' : 'en_US'} />
 
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />
@@ -82,7 +90,7 @@ const structuredData = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
     <script type="application/ld+json" set:html={structuredData} />
   </head>
   <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#main-content" class="skip-link">{copy[locale].skip}</a>
 
     <slot />
   </body>

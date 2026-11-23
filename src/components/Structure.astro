@@ -1,6 +1,15 @@
 ---
 import MemberCard from './MemberCard.astro';
 import { rosterPeriod, teamGroups } from '../data/team';
+import { copy } from '../data/copy';
+import type { Locale } from '../data/locales';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { roster } = copy[locale];
 
 const [leadership, ...divisions] = teamGroups;
 const memberCount = teamGroups.reduce((total, group) => total + group.members.length, 0);
@@ -29,23 +38,21 @@ const groupIcons: Partial<Record<(typeof teamGroups)[number]['id'], string>> = {
   </svg>
   <div class="roster-top">
     <div class="roster-intro">
-      <p class="eyebrow">03 / The people of BDCA</p>
-      <h2 class="display-title" id="roster-title">Organizational<br /><span class="accent">Structure</span></h2>
-      <p class="roster-description">
-        Meet the 2026–2027 Bina Darma Cyber Army team. Five groups work together to run the community.
-      </p>
+      <p class="eyebrow">03 / {roster.kicker}</p>
+      <h2 class="display-title" id="roster-title">{roster.title}<br /><span class="accent">{roster.accent}</span></h2>
+      <p class="roster-description">{roster.description}</p>
       <ul class="roster-stats" role="list">
         <li>
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d={groupIcons.relations} />
           </svg>
-          {memberCount} people
+          {memberCount} {roster.people}
         </li>
         <li>
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5" />
           </svg>
-          {teamGroups.length} groups
+          {teamGroups.length} {roster.groups}
         </li>
       </ul>
     </div>
@@ -53,11 +60,11 @@ const groupIcons: Partial<Record<(typeof teamGroups)[number]['id'], string>> = {
     <section class="leadership" aria-labelledby="leadership-title">
       <div class="leadership-intro">
         <p class="leadership-period">{rosterPeriod}</p>
-        <h3 id="leadership-title">{leadership.name}</h3>
-        <p class="leadership-description">{leadership.description}</p>
+        <h3 id="leadership-title">{leadership.name[locale]}</h3>
+        <p class="leadership-description">{leadership.description[locale]}</p>
       </div>
       <ul class="leadership-members" role="list">
-        {leadership.members.map((member) => <MemberCard member={member} compact />)}
+        {leadership.members.map((member) => <MemberCard {member} {locale} compact />)}
       </ul>
     </section>
   </div>
@@ -75,13 +82,13 @@ const groupIcons: Partial<Record<(typeof teamGroups)[number]['id'], string>> = {
             </svg>
           </span>
           <div class="division-copy">
-            <h3 id={`division-${group.id}`}>{group.name}</h3>
-            <p>{group.description}</p>
+            <h3 id={`division-${group.id}`}>{group.name[locale]}</h3>
+            <p>{group.description[locale]}</p>
           </div>
-          <span class="division-count">{group.members.length} members</span>
+          <span class="division-count">{group.members.length} {roster.members}</span>
         </header>
         <ul class="division-members" role="list">
-          {group.members.map((member) => <MemberCard member={member} />)}
+          {group.members.map((member) => <MemberCard {member} {locale} />)}
         </ul>
       </section>
     ))}
@@ -174,7 +181,10 @@ const groupIcons: Partial<Record<(typeof teamGroups)[number]['id'], string>> = {
   }
   .leadership-members, .division-members { display: grid; gap: .65rem; }
   .leadership-members {
-    --portrait-height: clamp(12rem, 17.7vw, 17rem);
+    --portrait-height: clamp(12.75rem, 19vw, 18.5rem);
+    --portrait-fit: cover;
+    --portrait-pos: 50% 16%;
+    --portrait-mask: none;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     padding: var(--panel-gap);
   }
@@ -236,11 +246,11 @@ const groupIcons: Partial<Record<(typeof teamGroups)[number]['id'], string>> = {
     white-space: nowrap;
   }
   .division-members {
-    --portrait-height: clamp(10.7rem, 13.2vw, 12.75rem);
+    --portrait-height: clamp(11.75rem, 15vw, 14rem);
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-rows: 1fr;
   }
-  .division-education { --caption-height: 4.65rem; }
+  .division-education { --caption-height: 4rem; }
   .roster-note {
     margin-top: .9rem;
     color: var(--muted);

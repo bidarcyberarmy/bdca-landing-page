@@ -1,27 +1,60 @@
 ---
-const links = [
-  { href: '/#programs', label: 'Programs' },
-  { href: '/#members', label: 'Our people' },
-  { href: '/#community', label: 'Community' },
-  { href: '/ecosystem/', label: 'Ecosystem' },
+import { copy } from '../data/copy';
+import { locales, pagePath, type Locale, type Page } from '../data/locales';
+
+interface Props {
+  locale: Locale;
+  page: Page;
+}
+
+const { locale, page } = Astro.props;
+const { nav } = copy[locale];
+const home = pagePath(locale);
+const languageNames = { en: 'English', id: 'Bahasa Indonesia' };
+const links: Array<{ href: string; label: string; external?: boolean }> = [
+  { href: `${home}#programs`, label: nav.programs },
+  { href: `${home}#members`, label: nav.people },
+  { href: `${home}#community`, label: nav.community },
+  { href: pagePath(locale, 'ecosystem'), label: nav.ecosystem },
+  { href: 'https://cert.bidarcyberarmy.org/', label: nav.certificates, external: true },
 ];
 ---
 
 <header class="site-header">
   <div class="wrap wrap-wide header-inner">
-    <a class="brand" href="/" aria-label="BDCA home">
-      <img src="/assets/bdca-emblem-96.webp" width="36" height="36" alt="" />
+    <a class="brand" href={home} aria-label={nav.home}>
+      <img src="/assets/bdca-emblem-48.webp" srcset="/assets/bdca-emblem-48.webp 1x, /assets/bdca-emblem-96.webp 2x" width="36" height="36" alt="" />
       <span>BDCA</span>
     </a>
-    <nav class="desktop-nav" aria-label="Main navigation">
-      {links.map(({ href, label }) => <a href={href}>{label}</a>)}
+    <nav class="desktop-nav" aria-label={nav.main}>
+      {links.map(({ href, label, external }) => (
+        <a href={href} rel={external ? 'noopener noreferrer' : undefined}>
+          {label}{external && <> <span aria-hidden="true">↗</span></>}
+        </a>
+      ))}
     </nav>
-    <a class="button header-cta" href="/#community">Join the community <span aria-hidden="true">↗</span></a>
+    <a class="button header-cta" href={`${home}#community`}>{nav.join} <span aria-hidden="true">↗</span></a>
+    <nav class="language-options" aria-label={nav.language}>
+      {locales.map((language) => (
+        <a
+          href={pagePath(language, page)}
+          lang={language}
+          hreflang={language}
+          aria-label={languageNames[language]}
+          title={languageNames[language]}
+          aria-current={language === locale ? 'page' : undefined}
+        >{language.toUpperCase()}</a>
+      ))}
+    </nav>
     <details class="mobile-nav">
-      <summary>Menu <span aria-hidden="true">+</span></summary>
-      <nav aria-label="Mobile navigation">
-        {links.map(({ href, label }) => <a href={href}>{label}</a>)}
-        <a href="/#community">Join the community <span aria-hidden="true">↗</span></a>
+      <summary>{nav.menu} <span aria-hidden="true">+</span></summary>
+      <nav aria-label={nav.mobile}>
+        {links.map(({ href, label, external }) => (
+          <a href={href} rel={external ? 'noopener noreferrer' : undefined}>
+            {label}{external && <> <span aria-hidden="true">↗</span></>}
+          </a>
+        ))}
+        <a href={`${home}#community`}>{nav.join} <span aria-hidden="true">↗</span></a>
       </nav>
     </details>
   </div>
@@ -29,16 +62,23 @@ const links = [
 
 <style>
   .site-header { position: relative; z-index: 2; background: transparent; }
-  .header-inner { min-height: var(--header-height); display: flex; align-items: center; gap: clamp(1.25rem, 3.5vw, 3.75rem); }
+  .header-inner { min-height: var(--header-height); display: flex; align-items: center; gap: clamp(.75rem, 1.8vw, 2rem); }
   .brand { display: inline-flex; align-items: center; gap: .7rem; min-height: 44px; font-weight: 700; font-size: 1.6rem; letter-spacing: -.065em; }
-  .desktop-nav { display: flex; align-items: center; gap: clamp(1.25rem, 2.45vw, 2.45rem); margin-inline-start: auto; font-size: .9375rem; }
-  .desktop-nav a { color: #344056; padding-block: .75rem; }
+  .desktop-nav { display: flex; align-items: center; gap: clamp(.95rem, 2vw, 2.2rem); margin-inline-start: auto; font-size: .9375rem; }
+  .desktop-nav a { color: #344056; padding-block: .75rem; white-space: nowrap; }
   .desktop-nav a:hover, .mobile-nav a:hover { color: var(--accent); }
   .header-cta { min-height: 44px; font-size: .875rem; white-space: nowrap; background: linear-gradient(110deg, var(--accent-bright), #0c285a); }
   .header-cta:hover { background: var(--accent-deep); }
+  .language-options { display: flex; flex: none; }
+  .language-options a {
+    display: grid; place-items: center; min-width: 44px; min-height: 44px; border-radius: .5rem;
+    font-size: .75rem; font-weight: 700; color: var(--muted);
+  }
+  .language-options a:hover, .language-options [aria-current] { color: var(--accent); background: #e2edfc; }
   .mobile-nav { display: none; }
-  @media (max-width: 840px) {
-    .header-inner { justify-content: space-between; }
+  @media (max-width: 1040px) {
+    .header-inner { gap: .6rem; }
+    .brand { margin-inline-end: auto; }
     .desktop-nav, .header-cta { display: none; }
     .mobile-nav { display: block; }
     .mobile-nav summary { display: flex; gap: .75rem; align-items: center; min-height: 44px; padding-inline: .8rem; border: 1px solid var(--line); border-radius: .5rem; cursor: pointer; font-size: .875rem; font-weight: 700; }

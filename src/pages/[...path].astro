@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Home from '../components/Home.astro';
+import ResourcePage from '../components/ResourcePage.astro';
+import Footer from '../components/Footer.astro';
+import { copy } from '../data/copy';
+import { locales, pages, pagePath } from '../data/locales';
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+
+export const getStaticPaths = (() =>
+  locales.flatMap((locale) => pages.map((page) => ({
+    params: { path: pagePath(locale, page).slice(1, -1) || undefined },
+    props: { locale, page },
+  })))
+) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { locale, page } = Astro.props;
+const content = page === 'home' ? copy[locale].home : copy[locale].resources[page];
+const title = page === 'home' ? content.title : `${content.title} | BDCA`;
+---
+
+<Layout {title} description={content.description} {locale} {page}>
+  <Navbar {locale} {page} />
+  {page === 'home' ? <Home {locale} /> : <ResourcePage {locale} {page} />}
+  <Footer {locale} />
+</Layout>

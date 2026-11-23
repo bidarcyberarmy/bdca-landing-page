@@ -1,21 +1,24 @@
 ---
-const programs = [
-  { verb: 'Discover', name: 'Cybersecurity', description: 'Explore application security, defensive thinking, CTF challenges, and hands-on research.' },
-  { verb: 'Create', name: 'Software development', description: 'Make useful digital tools through engineering, experimentation, and collaboration.' },
-  { verb: 'Connect', name: 'Education & community', description: 'Share ideas through practical sessions, mentorship, and collective learning.' },
-];
+import { copy } from '../data/copy';
+import type { Locale } from '../data/locales';
+
+interface Props {
+  locale: Locale;
+}
+
+const { programs } = copy[Astro.props.locale];
 ---
 
 <section id="programs" class="programs wrap" aria-labelledby="programs-title">
   <div class="section-heading">
     <div>
-      <p class="eyebrow">02 / What we do</p>
-      <h2 class="display-title" id="programs-title">Different disciplines.<br />One shared purpose.</h2>
+      <p class="eyebrow">02 / {programs.kicker}</p>
+      <h2 class="display-title" id="programs-title">{programs.title}<br />{programs.subtitle}</h2>
     </div>
-    <p>Learning by doing. Bringing people with different skills into the same room.</p>
+    <p>{programs.intro}</p>
   </div>
   <ol class="program-list" role="list">
-    {programs.map(({ verb, name, description }, index) => (
+    {programs.items.map(({ verb, name, description }, index) => (
       <li>
         <span class="program-index">0{index + 1} — {verb}</span>
         <h3>{name}</h3>
