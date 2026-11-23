@@ -1,10 +1,11 @@
-# BDCA implementation decisions
+# BDCA Design & Implementation Decisions
 
-The approved Cloud design uses pale blue surfaces, navy text, and blue-to-teal accents. Shared color, spacing, and typography tokens live in `src/styles/global.css`. The leadership and member card gradients are scoped to the roster components.
+The Cloud design uses pale blue surfaces (`#f7faff`), navy text (`#101b31`), and blue-to-teal accents (`#164fc2` to `#007891`). Shared color, spacing, and typography tokens live in `src/styles/global.css`. Leadership and member card gradients are scoped to `Structure.astro` and `MemberCard.astro`.
 
-- The homepage and resource pages use static HTML, scoped CSS, and system fonts. Small browser scripts handle the responsive menu and the optional globe.
-- The hero shows a responsive WebP poster on first paint. Its WebGL renderer and map texture load when the visitor activates the rotate control. The map is based on [Natural Earth 1:110m Land](https://www.naturalearthdata.com/downloads/110m-physical-vectors/110m-land/).
-- Every page has a single primary heading, a keyboard skip link, and visible focus styles. The document language is English. Official organization, event, and member names retain their original spelling.
-- The 2026–2027 roster is organized into five groups. Its data is maintained in `src/data/team.ts`.
-- Astro generates the sitemap using the canonical origin in `astro.config.mjs`. The shared layout builds Open Graph, social preview, and structured data tags.
-- Cloudflare Pages serves `dist/`. Response header rules live in `public/_headers`.
+- **Zero-framework static output:** Pages use static HTML, scoped CSS inlined at build time (`inlineStylesheets: 'always'`), and system fonts. Client JavaScript is limited to the mobile `<details>` menu and the optional WebGL globe.
+- **Bilingual static routing:** `src/pages/[...path].astro` pre-renders English (`/`, `/ecosystem/`, `/activities/`) and Indonesian (`/id/`, `/id/ecosystem/`, `/id/activities/`) from typed data in `src/data/copy.ts` and `src/data/locales.ts`. Official organization, event, project, and member names retain their original spelling.
+- **Featured utility showcases:** Both `Bdcahoot.astro` (Sharing Session quiz) and `Certificates.astro` (credential verification at `https://cert.bidarcyberarmy.org/`) share a consistent two-column light-blue panel layout with a native `<details>` step guide and direct external link. `Navbar.astro` also surfaces a direct `Certificates` link beside `Ecosystem`.
+- **Progressive WebGL globe:** The hero renders a responsive WebP poster on first paint (`fetchpriority="high"`). The WebGL shader and Natural Earth 1:110m land texture (`cloud-globe-land.webp`) load only when the visitor activates **Rotate globe**, with graceful fallback if WebGL is unavailable or context is lost.
+- **Optimized team portraits:** Portraits in `src/assets/team/` are processed via Astro's `<Image>` component into responsive WebP variants (`144`, `216`, `288` px) with lazy loading and async decoding.
+- **Accessibility & keyboard support:** Every route has a single `<h1>`, a keyboard skip link, 44×44 px minimum touch targets, visible `:focus-visible` outlines, and `forced-colors` fallbacks for gradient text.
+- **SEO & host security:** `@astrojs/sitemap` generates the sitemap from `site` in `astro.config.mjs`. `Layout.astro` emits canonical URLs, `hreflang` alternates, Open Graph/Twitter tags, and JSON-LD. Cloudflare Pages serves `dist/` using the CSP, HSTS, and caching rules in `public/_headers`.
