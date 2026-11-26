@@ -3,7 +3,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://bdca-landing-page.vercel.app',
+  site: 'https://www.bidarcyberarmy.org',
   integrations: [sitemap()],
   devToolbar: { enabled: false },
   compressHTML: true,
