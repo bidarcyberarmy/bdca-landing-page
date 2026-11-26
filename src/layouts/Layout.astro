@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Analytics from '@vercel/analytics/astro';
 import { siteConfig } from '../data/site';
 import { copy } from '../data/copy';
 import { locales, pagePath, type Locale, type Page } from '../data/locales';
@@ -94,5 +95,6 @@ const structuredData = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
     <a href="#main-content" class="skip-link">{copy[locale].skip}</a>
 
     <slot />
+    <Analytics />
   </body>
 </html>
